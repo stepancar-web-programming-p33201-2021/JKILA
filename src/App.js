@@ -1,4 +1,7 @@
-import logo from './logo.svg';
+
+import logo2 from './letter-j.png';
+
+
 import './App.css';
 import React  from 'react';
 
@@ -6,9 +9,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={logo2} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          <i>JKILA coming soon ...</i>
         </p>
         <a
           className="App-link"
