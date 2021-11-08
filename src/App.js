@@ -1,9 +1,11 @@
 
-import logo2 from './letter-j.png';
+import centerLogo from './pictures/letter-j.png';
+import jkilaLogo from './pictures/JKILA.png';
 
-
-import './App.css';
-import './Elements.css';
+import './style/index.css';
+import './style/App.css';
+import './style/Elements.css';
+import './style/margins.css';
 import React  from 'react';
 
 function App() {
@@ -11,13 +13,15 @@ function App() {
     <div className = "App">
        <div className = "d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
 
-        <p className="h5 my-0 me-md-auto fw-normal">
-          <a className="h3 text-dark text-decoration-none" href="/">JKILA</a>
+        <p className="h5 my-0 me-md-3 fw-normal">
+          <a className="h1 text-dark text-decoration-none" href="/">JKILA</a>
+          
         </p>
-        <nav className="my-2 my-md-0 me-md-3" >
-            <a className="p-2 text-dark text-decoration-none" href="/groups" > Teams </a>
-            <a className="p-2 text-dark text-decoration-none" href="/user" > People </a>
-            <a className="p-2 text-dark text-decoration-none" href="/board" > Board </a>
+        <img src = {jkilaLogo} className = "App-logo2 my-0 me-md-auto fw-normal"/>
+        <nav className = "my-2 my-md-0 me-md-3" >
+            <a className = "p-2 text-dark text-decoration-none" href="/groups" > Teams </a>
+            <a className = "p-2 text-dark text-decoration-none" href="/user" > People </a>
+            <a className = "p-2 text-dark text-decoration-none" href="/board" > Board </a>
 
             <a className="h5 p-2 text-decoration-none" href="/user/profile"></a>
         </nav>
@@ -27,7 +31,7 @@ function App() {
         </a>
       </div>
       <header className="App-header">
-        <img src={logo2} className="App-logo" alt="logo" />
+        <img src = {centerLogo} className="App-logo" alt="logo" />
         <p>
           <i>JKILA coming soon ...</i>
         </p>
