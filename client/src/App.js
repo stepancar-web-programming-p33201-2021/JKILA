@@ -1,4 +1,3 @@
-
 import centerLogo from './pictures/letter-j.png';
 import jkilaLogo from './pictures/JKILA.png';
 
@@ -6,6 +5,7 @@ import './style/index.css';
 import './style/App.css';
 import './style/Elements.css';
 import './style/margins.css';
+
 import React  from 'react';
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
             <a className = "p-2 text-dark text-decoration-none" href="/user" > People </a>
             <a className = "p-2 text-dark text-decoration-none" href="/board" > Board </a>
 
-            <a className="h5 p-2 text-decoration-none" href="/user/profile"></a>
+            <a className="h5 p-2 text-decoration-none" href="/user/profile">prof</a>
         </nav>
 
         <a href="/login" className="btn btn-outline-primary ml-5 " >
