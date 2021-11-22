@@ -1,0 +1,8 @@
+{
+  "port": 5000,
+  "db_name": "jkilla",
+  "db_user": "postgres",
+  "db_password": "789456123",
+  "db_host": "local",
+  "db_port": 5432
+}

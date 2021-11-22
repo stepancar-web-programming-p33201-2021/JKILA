@@ -6,32 +6,33 @@ import './style/App.css';
 import './style/Elements.css';
 import './style/margins.css';
 
-import React  from 'react';
+// eslint-disable-next-line import/order
+import React from 'react';
 
-function App() {
+const App = function () {
   return (
-    <div className = "App">
-       <div className = "d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <div className="App">
+      <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
 
         <p className="h5 my-0 me-md-3 fw-normal">
           <a className="h1 text-dark text-decoration-none" href="/">JKILA</a>
-          
-        </p>
-        <img src = {jkilaLogo} className = "App-logo2 my-0 me-md-auto fw-normal"/>
-        <nav className = "my-2 my-md-0 me-md-3" >
-            <a className = "p-2 text-dark text-decoration-none" href="/groups" > Teams </a>
-            <a className = "p-2 text-dark text-decoration-none" href="/user" > People </a>
-            <a className = "p-2 text-dark text-decoration-none" href="/board" > Board </a>
 
-            <a className="h5 p-2 text-decoration-none" href="/user/profile">prof</a>
+        </p>
+        <img src={jkilaLogo} className="App-logo2 my-0 me-md-auto fw-normal" alt="" />
+        <nav className="my-2 my-md-0 me-md-3">
+          <a className="p-2 text-dark text-decoration-none" href="/groups"> Teams </a>
+          <a className="p-2 text-dark text-decoration-none" href="/user"> People </a>
+          <a className="p-2 text-dark text-decoration-none" href="/board"> Board </a>
+
+          <a className="h5 p-2 text-decoration-none" href="/user/profile">prof</a>
         </nav>
 
-        <a href="/login" className="btn btn-outline-primary ml-5 " >
-            Sign In
+        <a href="/login" className="btn btn-outline-primary ml-5 ">
+          Sign In
         </a>
       </div>
       <header className="App-header">
-        <img src = {centerLogo} className="App-logo" alt="logo" />
+        <img src={centerLogo} className="App-logo" alt="logo" />
         <p>
           <i>JKILA coming soon ...</i>
         </p>
@@ -46,6 +47,6 @@ function App() {
       </header>
     </div>
   );
-}
+};
 
 export default App;
