@@ -24,7 +24,7 @@ const App = function () {
           <a className="p-2 text-dark text-decoration-none" href="/user"> People </a>
           <a className="p-2 text-dark text-decoration-none" href="/board"> Board </a>
 
-          <a className="h5 p-2 text-decoration-none" href="/user/profile">prof</a>
+          <a className="text-dark p-2 text-decoration-none" href="/user/profile">Prof</a>
         </nav>
 
         <a href="/login" className="btn btn-outline-primary ml-5 ">
