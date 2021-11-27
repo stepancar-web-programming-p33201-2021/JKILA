@@ -1,5 +1,9 @@
+const { Project } = require('../models/models');
+
 async function create(req, res) {
-  res.json({ message: 'project.created' });
+  const { name, work } = req.body;
+  const project = await Project.create({ proj_name: name, ws_id: work });
+  return res.json(project);
 }
 
 async function getAll(req, res) {

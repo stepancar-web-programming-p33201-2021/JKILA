@@ -7,16 +7,15 @@ const User = pool.define('user', {
   last_name: { type: DataTypes.STRING, allowNull: false },
   username: { type: DataTypes.STRING, unique: true },
   password: { type: DataTypes.STRING },
-  active: { type: DataTypes.BOOLEAN },
+  active: { type: DataTypes.BOOLEAN, defaultValue: true },
   role: { type: DataTypes.ENUM('USER', 'ADMIN') },
 });
 
 const Issue = pool.define('issue', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
-  creation_date: { type: DataTypes.DATE },
   due_date: { type: DataTypes.DATE },
   summary: { type: DataTypes.STRING },
-  priority: { type: DataTypes.ENUM('Lowest', 'Low', 'Medium', 'High', 'Highest') },
+  priority: { type: DataTypes.ENUM('Lowest', 'Low', 'Medium', 'High', 'Highest'), defaultValue: 'Medium' },
   // status: { type: DataTypes.ENUM('To Do', 'Doing', 'Done') },
 });
 
@@ -28,7 +27,6 @@ const Project = pool.define('project', {
 const Workspace = pool.define('workspace', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   workspace_name: { type: DataTypes.STRING, unique: true, allowNull: false },
-  creation_date: { type: DataTypes.DATE },
   description: { type: DataTypes.TEXT },
 });
 

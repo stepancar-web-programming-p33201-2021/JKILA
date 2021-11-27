@@ -1,5 +1,9 @@
+const { Issue } = require('../models/models');
+
 async function create(req, res) {
-  res.json({ message: 'issue.created' });
+  const { sum, due, pri } = req.body;
+  const issue = await Issue.create({ summary: sum, /* due_date: due, */ priority: pri });
+  return res.json(issue);
 }
 
 async function getAll(req, res) {

@@ -4,6 +4,8 @@ const tagController = require('../controllers/tagController');
 const router = new Router();
 
 router.post('/', tagController.create);
+router.post('/:id', tagController.destroy);
+
 router.get('/', tagController.getAll);
 router.get('/:id', tagController.getOne);
 
