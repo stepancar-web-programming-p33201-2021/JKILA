@@ -6,7 +6,7 @@ async function create(req, res) {
   const tag = await Tag.create({ tag_name: tagName });
   return res.json(tag);
 }
-
+// TODO
 async function destroy(req, res) {
   /* const { tagName } = req.query;
   await Tag.destroy(await Tag.findOne({ where: { tag_name: tagName } }));
