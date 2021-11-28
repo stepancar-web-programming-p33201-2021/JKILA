@@ -3,10 +3,10 @@ const customError = require('../error/customError');
 
 async function create(req, res) {
   const {
-    summary, due, pri, stat, project, creator,
+    summary, due, priority, status, project, creator,
   } = req.body;
   const issue = await Issue.create({
-    summary, due_date: due, priority: pri, status: stat, project_id: project, creator_id: creator,
+    summary, due_date: due, priority, status, project_id: project, creator_id: creator,
   });
   return res.json(issue);
 }
@@ -18,7 +18,21 @@ async function destroy(req, res) {
 }
 
 async function getAll(req, res) {
-  const issues = await Issue.findAll();
+  let issues;
+  const { priority, status } = req.query;
+  if (!priority && !status) {
+    issues = await Issue.findAll();
+  }
+  if (priority && !status) {
+    issues = await Issue.findAll({ where: { priority } });
+  }
+  if (!priority && status) {
+    issues = await Issue.findAll({ where: { status } });
+  }
+  if (priority && status) {
+    issues = await Issue.findAll({ where: { priority, status } });
+  }
+
   return res.json(issues);
 }
 
