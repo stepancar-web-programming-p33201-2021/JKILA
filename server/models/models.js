@@ -15,24 +15,28 @@ const Issue = pool.define('issue', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   due_date: { type: DataTypes.DATE },
   summary: { type: DataTypes.STRING },
-  priority: { type: DataTypes.ENUM('Lowest', 'Low', 'Medium', 'High', 'Highest'), defaultValue: 'Medium' },
-  // status: { type: DataTypes.ENUM('To Do', 'Doing', 'Done') },
+  priority: { type: DataTypes.ENUM('Lowest', 'Low', 'Medium', 'High', 'Highest'), defaultValue: 'Low' },
+  status: { type: DataTypes.ENUM('To Do', 'In Progress', 'Done') },
 });
 
 const Project = pool.define('project', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   proj_name: { type: DataTypes.STRING, allowNull: false },
+  // TODO
+  // logo NN
 });
 
 const Workspace = pool.define('workspace', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   workspace_name: { type: DataTypes.STRING, unique: true, allowNull: false },
   description: { type: DataTypes.TEXT },
+  // TODO
+  // logo NN
 });
 
 const Tag = pool.define('tag', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
-  tag_name: { type: DataTypes.STRING, unique: true, allowNull: false },
+  tag_name: { type: DataTypes.STRING, allowNull: false },
 });
 
 // Relationship tables
@@ -49,9 +53,12 @@ const WorkspaceUsers = pool.define('works_users', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
 });
 
-const ProjectUsersRoles = pool.define('project_users_roles', {
+const ProjectUsers = pool.define('project_users', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
-  role_name: { type: DataTypes.STRING, unique: true, allowNull: false },
+});
+
+const ProjectTags = pool.define('project_tags', {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
 });
 
 // Relations between tables
@@ -89,9 +96,21 @@ WorkspaceUsers.belongsTo(User);
 Workspace.hasMany(WorkspaceUsers);
 User.hasMany(WorkspaceUsers);
 
-// Many-to-Many-to-Many relation
-Project.belongsToMany(User, { through: ProjectUsersRoles });
-User.belongsToMany(Project, { through: ProjectUsersRoles });
+// Project - User
+Project.belongsToMany(User, { through: ProjectUsers });
+User.belongsToMany(Project, { through: ProjectUsers });
+WorkspaceUsers.belongsTo(Project);
+WorkspaceUsers.belongsTo(User);
+Project.hasMany(WorkspaceUsers);
+User.hasMany(WorkspaceUsers);
+
+// Project - Tag
+Project.belongsToMany(Tag, { through: ProjectTags });
+Tag.belongsToMany(Project, { through: ProjectTags });
+WorkspaceUsers.belongsTo(Project);
+WorkspaceUsers.belongsTo(Tag);
+Project.hasMany(WorkspaceUsers);
+Tag.hasMany(WorkspaceUsers);
 
 module.exports = {
   User,
@@ -102,5 +121,5 @@ module.exports = {
   IssueAssignee,
   IssueTags,
   WorkspaceUsers,
-  ProjectUsersRoles,
+  ProjectUsers,
 };
