@@ -16,7 +16,7 @@ const Issue = pool.define('issue', {
   due_date: { type: DataTypes.DATE },
   summary: { type: DataTypes.STRING },
   priority: { type: DataTypes.ENUM('Lowest', 'Low', 'Medium', 'High', 'Highest'), defaultValue: 'Low' },
-  status: { type: DataTypes.ENUM('To Do', 'In Progress', 'Done') },
+  status: { type: DataTypes.ENUM('To Do', 'In Progress', 'Done'), defaultValue: 'To Do' },
 });
 
 const Project = pool.define('project', {
