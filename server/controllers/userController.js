@@ -1,49 +1,55 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const customError = require('../error/customError');
+const config = require('../config/default.json');
 const { User } = require('../models/models');
 
-const generateJwt = (id, email, role) => jwt.sign(
-  { id, email, role },
-  process.env.SECRET_KEY,
+const generateJwt = (id, username, role) => jwt.sign(
+  { id, username, role },
+  config.SECRET_KEY,
   { expiresIn: '24h' },
 );
 
-class UserController {
-  async registration(req, res, next) {
-    const { email, password, role } = req.body;
-    if (!email || !password) {
-      return next(customError.badRequest('Некорректный email или password'));
-    }
-    const candidate = await User.findOne({ where: { email } });
-    if (candidate) {
-      return next(customError.badRequest('Пользователь с таким email уже существует'));
-    }
-    const hashPassword = await bcrypt.hash(password, 5);
-    const user = await User.create({ email, role, password: hashPassword });
-    const basket = await Basket.create({ userId: user.id });
-    const token = generateJwt(user.id, user.email, user.role);
-    return res.json({ token });
+async function registration(req, res, next) {
+  const {
+    username, password, role, fName, lName,
+  } = req.body;
+  if (!username || !password || !fName || !lName) {
+    return next(customError.badRequest('Некорректный вводные данные'));
   }
-
-  async login(req, res, next) {
-    const { email, password } = req.body;
-    const user = await User.findOne({ where: { email } });
-    if (!user) {
-      return next(customError.badRequest('Пользователь не найден'));
-    }
-    const comparePassword = bcrypt.compareSync(password, user.password);
-    if (!comparePassword) {
-      return next(customError.badRequest('Указан неверный пароль'));
-    }
-    const token = generateJwt(user.id, user.email, user.role);
-    return res.json({ token });
+  const candidate = await User.findOne({ where: { username } });
+  if (candidate) {
+    return next(customError.badRequest('Пользователь с таким username уже существует'));
   }
-
-  async check(req, res, next) {
-    const token = generateJwt(req.user.id, req.user.email, req.user.role);
-    return res.json({ token });
-  }
+  const hashPassword = await bcrypt.hash(password, 5);
+  const user = await User.create({
+    username, role, password: hashPassword, first_name: fName, last_name: lName,
+  });
+  const token = generateJwt(user.id, user.username, user.role);
+  return res.json({ token });
 }
 
-module.exports = new UserController();
+async function login(req, res, next) {
+  const { username, password } = req.body;
+  const user = await User.findOne({ where: { username } });
+  if (!user) {
+    return next(customError.badRequest('Пользователь не найден'));
+  }
+  const comparePassword = bcrypt.compareSync(password, user.password);
+  if (!comparePassword) {
+    return next(customError.badRequest('Неверный пароль'));
+  }
+  const token = generateJwt(user.id, user.username, user.role);
+  return res.json({ token });
+}
+
+async function check(req, res, next) {
+  const token = generateJwt(req.user.id, req.user.username, req.user.role);
+  return res.json({ token });
+}
+
+module.exports = {
+  registration,
+  login,
+  check,
+};

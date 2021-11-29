@@ -8,7 +8,7 @@ const User = pool.define('user', {
   username: { type: DataTypes.STRING, unique: true },
   password: { type: DataTypes.STRING },
   active: { type: DataTypes.BOOLEAN, defaultValue: true },
-  role: { type: DataTypes.ENUM('USER', 'ADMIN') },
+  role: { type: DataTypes.ENUM('USER', 'ADMIN'), defaultValue: 'USER' },
 });
 
 const Issue = pool.define('issue', {

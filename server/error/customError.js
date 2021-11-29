@@ -5,6 +5,10 @@ class CustomError extends Error {
     this.message = message;
   }
 
+  static unAuthorized(message) {
+    return new CustomError(401, message);
+  }
+
   static forbidden(message) {
     return new CustomError(403, message);
   }
