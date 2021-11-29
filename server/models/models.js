@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const pool = require('../db');
+const pool = require('../libs/db');
 
 const User = pool.define('user', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },

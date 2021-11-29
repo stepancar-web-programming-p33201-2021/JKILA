@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 
-const pool = require('./db');
+const pool = require('./libs/db');
 const models = require('./models/models');
 const router = require('./routes/index');
 const error = require('./middleware/ErrorsMiddleware');
