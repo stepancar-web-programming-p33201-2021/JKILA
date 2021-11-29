@@ -1,28 +1,30 @@
 const { Tag } = require('../models/models');
-// const customError = require("../error/customError");
+const customError = require('../error/customError');
 
 async function create(req, res) {
-  const { tagName } = req.body;
-  const tag = await Tag.create({ tag_name: tagName });
+  const { name } = req.body;
+  const tag = await Tag.create({ tag_name: name });
   return res.json(tag);
 }
 
 async function destroy(req, res) {
-  /* const { tagName } = req.query;
-  await Tag.destroy(await Tag.findOne({ where: { tag_name: tagName } }));
-  return res.json({ message: `tag ${tagName} deleted` }); */
+  const { id } = req.params;
+  await Tag.destroy({ where: { id } });
+  return res.json({ message: `Tag with ID = ${id} deleted` });
 }
 
 async function getAll(req, res) {
-  res.json({ message: 'tag.getAll' });
+  const tags = await Tag.findAll();
+  return res.json(tags);
 }
 
 async function getOne(req, res, next) {
-  /* const { id } = req.query;
-  if (!id) {
-    return next(customError.badRequest('Не указан ID'));
+  const { id } = req.params;
+  const tag = await Tag.findOne({ where: { id } });
+  if (tag === null) {
+    return next(customError.badRequest('There is no TAG with this ID'));
   }
-  res.json(id); */
+  res.json(tag);
 }
 
 module.exports = {

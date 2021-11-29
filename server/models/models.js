@@ -16,7 +16,7 @@ const Issue = pool.define('issue', {
   due_date: { type: DataTypes.DATE },
   summary: { type: DataTypes.STRING },
   priority: { type: DataTypes.ENUM('Lowest', 'Low', 'Medium', 'High', 'Highest'), defaultValue: 'Low' },
-  status: { type: DataTypes.ENUM('To Do', 'In Progress', 'Done') },
+  status: { type: DataTypes.ENUM('To Do', 'In Progress', 'Done'), defaultValue: 'To Do' },
 });
 
 const Project = pool.define('project', {
@@ -37,6 +37,11 @@ const Workspace = pool.define('workspace', {
 const Tag = pool.define('tag', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   tag_name: { type: DataTypes.STRING, allowNull: false },
+});
+
+const Comment = pool.define('comment', {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  body: { type: DataTypes.STRING, allowNull: false },
 });
 
 // Relationship tables
@@ -62,6 +67,7 @@ const ProjectTags = pool.define('project_tags', {
 });
 
 // Relations between tables
+
 Project.hasMany(Issue, { foreignKey: 'project_id' });
 Issue.belongsTo(Project, { foreignKey: 'project_id' });
 
@@ -70,6 +76,12 @@ Issue.belongsTo(User, { foreignKey: 'creator_id' });
 
 Workspace.hasMany(Project, { foreignKey: 'ws_id' });
 Project.belongsTo(Workspace, { foreignKey: 'ws_id' });
+
+Issue.hasMany(Comment, { foreignKey: 'issue_id' });
+Comment.belongsTo(Issue, { foreignKey: 'issue_id' });
+
+User.hasMany(Comment, { foreignKey: 'user_id' });
+Comment.belongsTo(User, { foreignKey: 'user_id' });
 
 // Super Many-to-Many relationships
 // Issue - User
@@ -118,6 +130,7 @@ module.exports = {
   Project,
   Workspace,
   Tag,
+  Comment,
   IssueAssignee,
   IssueTags,
   WorkspaceUsers,
