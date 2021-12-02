@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import AppRouter from './components/AppRouter';
+import NavBar from './components/NavBar';
 // import centerLogo from './pictures/letter-j.png';
 // import jkilaLogo from './pictures/JKILA.png';
 
@@ -8,11 +9,14 @@ import './style/index.css';
 import './style/App.css';
 import './style/Elements.css';
 import './style/margins.css';
+import Columns from './components/Columns';
 
 const App = function () {
   return (
     <BrowserRouter>
+      <NavBar />
       <AppRouter />
+      <Columns />
     </BrowserRouter>
   );
   /* <div className="App">

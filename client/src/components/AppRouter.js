@@ -1,17 +1,18 @@
 import React from 'react';
 // eslint-disable-next-line no-unused-vars
-import { Routes, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { authRoutes, publicRoutes } from '../routes';
+import { LOGIN_ROUTE } from '../utils/consts';
 
 const AppRouter = function () {
   const isAuth = false;
   return (
-    <Routes>
+    <Switch>
       {isAuth === true && authRoutes.map(({ path, Component }) => (
         <Route
           key={path}
           path={path}
-          element={<Component />}
+          component={Component}
           exact
         />
       ))}
@@ -19,11 +20,12 @@ const AppRouter = function () {
         <Route
           key={path}
           path={path}
-          element={<Component />}
+          component={Component}
           exact
         />
       ))}
-    </Routes>
+      <Redirect to={LOGIN_ROUTE} />
+    </Switch>
   );
 };
 
