@@ -6,6 +6,7 @@ import { Context } from '../index';
 
 import { fetchWorkspaces } from '../http/workspaceApi';
 import CreateWorkspace from '../modals/createWorkspace';
+import WorkspaceList from '../components/WorkspaceList';
 
 const Workspaces = observer(() => {
   const { workspace } = useContext(Context);
@@ -17,6 +18,7 @@ const Workspaces = observer(() => {
 
   return (
     <div>
+      <WorkspaceList />
       <Container className="d-flex flex-column">
         <Button variant="outline-danger" onClick={() => setWorkspaceVisible(true)}>
           Create Workspace
