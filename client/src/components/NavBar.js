@@ -17,7 +17,7 @@ import {
 // import { authRoutes } from '../routes';
 
 // TODO
-// Buttons instead of links
+// Buttons instead of links or not?
 const NavBar = observer(() => {
   const { user } = useContext(Context);
   const logOut = () => {
@@ -29,7 +29,10 @@ const NavBar = observer(() => {
       <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
 
         <p className="h5 my-0 me-md-3 fw-normal">
-          <NavLink to="/" className="h1 text-dark text-decoration-none"> JKILA </NavLink>
+          { user.isAuth
+          ? <NavLink to={WORKSPACES} className="h1 text-dark text-decoration-none"> JKILA </NavLink>
+          : <NavLink to={LOGIN_ROUTE} className="h1 text-dark text-decoration-none"> JKILA </NavLink>
+          }
         </p>
         <img src={jkilaLogo} className="App-logo2 my-0 me-md-auto fw-normal" alt="" />
         {user.isAuth
@@ -41,8 +44,7 @@ const NavBar = observer(() => {
               <NavLink to={LOGIN_ROUTE} className="btn btn-outline-primary ml-5" onClick={() => logOut()}> Sign Out </NavLink>
             </nav>
           )
-          : <NavLink to={REGISTRATION_ROUTE} className="btn btn-outline-primary ml-5"
-                     onClick={() => user.setIsAuth(true)}> Sign In </NavLink>}
+          : <NavLink to={REGISTRATION_ROUTE} className="btn btn-outline-primary ml-5"> Sign In </NavLink>}
       </div>
     </div>
   );

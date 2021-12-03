@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { authRoutes, publicRoutes } from '../routes';
-import { LOGIN_ROUTE } from '../utils/consts';
 import { Context } from '../index';
+import { LOGIN_ROUTE, WORKSPACES } from '../utils/consts';
 
 const AppRouter = function () {
   const { user } = useContext(Context);
@@ -26,7 +26,9 @@ const AppRouter = function () {
           exact
         />
       ))}
-      <Redirect to={LOGIN_ROUTE} />
+      { user.isAuth === true
+        ? <Redirect to={WORKSPACES} />
+        : <Redirect to={LOGIN_ROUTE} />}
     </Switch>
   );
 };
