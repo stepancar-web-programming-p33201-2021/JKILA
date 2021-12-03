@@ -33,4 +33,8 @@ const AppRouter = function () {
   );
 };
 
+/* { user.isAuth === true
+        ? <Redirect to={WORKSPACES} />
+        : <Redirect to={LOGIN_ROUTE} />}
+*/
 export default AppRouter;

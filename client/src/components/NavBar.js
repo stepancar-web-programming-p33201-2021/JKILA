@@ -23,6 +23,7 @@ const NavBar = observer(() => {
   const logOut = () => {
     user.setUser({})
     user.setIsAuth(false)
+    localStorage.setItem('token', null);
   }
   console.log(user.isAuth);
   return (

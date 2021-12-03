@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import { NavLink, useLocation, useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { LOGIN_ROUTE, REGISTRATION_ROUTE, WORKSPACES } from '../utils/consts';
+import {BOARD, LOGIN_ROUTE, REGISTRATION_ROUTE, WORKSPACES} from '../utils/consts';
 import { login, registration } from '../http/userAPI';
 import { Context } from '../index';
 
