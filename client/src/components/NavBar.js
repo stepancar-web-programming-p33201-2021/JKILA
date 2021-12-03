@@ -24,6 +24,7 @@ const NavBar = observer(() => {
     user.setUser({})
     user.setIsAuth(false)
   }
+  console.log(user.isAuth);
   return (
     <div className="App">
       <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
@@ -35,6 +36,7 @@ const NavBar = observer(() => {
           }
         </p>
         <img src={jkilaLogo} className="App-logo2 my-0 me-md-auto fw-normal" alt="" />
+
         {user.isAuth
           ? (
             <nav className="my-2 my-md-0 me-md-3">
@@ -44,7 +46,7 @@ const NavBar = observer(() => {
               <NavLink to={LOGIN_ROUTE} className="btn btn-outline-primary ml-5" onClick={() => logOut()}> Sign Out </NavLink>
             </nav>
           )
-          : <NavLink to={REGISTRATION_ROUTE} className="btn btn-outline-primary ml-5"> Sign In </NavLink>}
+          : <NavLink to={LOGIN_ROUTE} className="btn btn-outline-primary ml-5"> Sign In </NavLink>}
       </div>
     </div>
   );
