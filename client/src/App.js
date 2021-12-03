@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext, useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
@@ -13,7 +14,7 @@ const App = observer(() => {
   const { user } = useContext(Context);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    check().then(() => {
+    check().then((data) => {
       user.setUser(true);
       user.setIsAuth(true);
     }).finally(() => setLoading(false));
