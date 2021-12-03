@@ -27,6 +27,7 @@ services:
       - dbPassword=789456123
       - dbHost=localhost
       - dbPort=5432
+    command: npm run server
   client:
     stdin_open: true
     environment:
@@ -37,3 +38,4 @@ services:
     volumes:
       - /app/node_modules
       - ./client:/app
+    command: npm run start

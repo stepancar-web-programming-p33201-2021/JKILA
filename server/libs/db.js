@@ -11,3 +11,14 @@ module.exports = new Sequelize(
     port: config.get('db_port'),
   },
 );
+
+// module.exports = new Sequelize(
+//   process.env.dbName || 'jkila',
+//   process.env.dbUser || 'postgres',
+//   process.env.dbPassword || '789456123',
+//   {
+//     dialect: 'postgres',
+//     host: process.env.dbHost || 'localhost',
+//     port: process.env.dbPort || '5432',
+//   },
+// );
