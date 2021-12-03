@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import { authRoutes, publicRoutes } from '../routes';
 import { Context } from '../index';
 import { LOGIN_ROUTE, WORKSPACES } from '../utils/consts';
 
-const AppRouter = function () {
+const AppRouter = observer(() => {
   const { user } = useContext(Context);
 
   console.log(user);
@@ -31,7 +32,7 @@ const AppRouter = function () {
         : <Redirect to={LOGIN_ROUTE} />}
     </Switch>
   );
-};
+});
 
 /* { user.isAuth === true
         ? <Redirect to={WORKSPACES} />
