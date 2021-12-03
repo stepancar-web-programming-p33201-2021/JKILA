@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import UserStore from './store/UserStore';
 
+// eslint-disable-next-line import/prefer-default-export
 export const Context = createContext(null);
-
+console.log(process.env.REACT_APP_API_URL);
 ReactDOM.render(
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
   <Context.Provider value={{
     user: new UserStore(),
   }}

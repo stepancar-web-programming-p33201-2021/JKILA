@@ -1,14 +1,16 @@
-import React from 'react';
-// eslint-disable-next-line no-unused-vars
+import React, { useContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { authRoutes, publicRoutes } from '../routes';
 import { LOGIN_ROUTE } from '../utils/consts';
+import { Context } from '../index';
 
 const AppRouter = function () {
-  const isAuth = false;
+  const { user } = useContext(Context);
+
+  console.log(user);
   return (
     <Switch>
-      {isAuth === true && authRoutes.map(({ path, Component }) => (
+      {user.isAuth === true && authRoutes.map(({ path, Component }) => (
         <Route
           key={path}
           path={path}

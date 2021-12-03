@@ -1,9 +1,10 @@
 import React from 'react';
+import Columns from '../components/Columns';
 
 const Kanban = function () {
   return (
     <div>
-      KANBAN
+      <Columns />
     </div>
   );
 };

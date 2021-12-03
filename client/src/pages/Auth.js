@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext, useState } from 'react';
 import { Container, Form } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
@@ -14,16 +15,19 @@ const Auth = observer(() => {
   const location = useLocation();
   const history = useHistory();
   const isLogin = location.pathname === LOGIN_ROUTE;
-  const [email, setEmail] = useState('');
+  const [fName, setfName] = useState('');
+  const [lName, setlName] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const click = async () => {
     try {
       let data;
       if (isLogin) {
-        data = await login(email, password);
+        data = await login(username, password);
       } else {
-        data = await registration(email, password);
+        console.log(username, fName, lName, password);
+        data = await registration(username, fName, lName, password);
       }
       user.setUser(user);
       user.setIsAuth(true);
@@ -34,46 +38,39 @@ const Auth = observer(() => {
   };
 
   return (
-    <Container
-      className="d-flex justify-content-center align-items-center"
-      style={{ height: window.innerHeight - 54 }}
-    >
+    <Container className="d-flex justify-content-center align-items-center">
       <Card style={{ width: 600 }} className="p-5">
-        <h2 className="m-auto">{isLogin ? 'Авторизация' : 'Регистрация'}</h2>
+        <h2 className="m-auto">{isLogin ? 'Вход' : 'Регистрация'}</h2>
         <Form className="d-flex flex-column">
-          <Form.Control
-            className="mt-3"
-            placeholder="Введите ваш email..."
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Form.Control
-            className="mt-3"
-            placeholder="Введите ваш пароль..."
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-          />
+          {isLogin ? (
+                  <div>
+                    <Form.Control className="mt-3" placeholder="Введите username..." value={username} onChange={(e) => setUsername(e.target.value)}/>
+                    <Form.Control className="mt-3" placeholder="Введите пароль..." value={password} onChange={(e) => setPassword(e.target.value)} type="password"/>
+
+                  </div>
+              )
+              : (
+                  <div>
+                    <Form.Control className="mt-3" placeholder="Введите username..." value={username} onChange={(e) => setUsername(e.target.value)}/>
+                    <Form.Control className="mt-3" placeholder="Введите имя..." value={fName} onChange={(e) => setfName(e.target.value)}/>
+                    <Form.Control className="mt-3" placeholder="Введите фамилию..." value={lName} onChange={(e) => setlName(e.target.value)}/>
+                    <Form.Control className="mt-3" placeholder="Введите пароль..." value={password} onChange={(e) => setPassword(e.target.value)} type="password"/>
+                  </div>
+              )}
+
           <Row className="d-flex justify-content-between mt-3 pl-3 pr-3">
-            {isLogin
-              ? (
-                <div>
-                  Нет аккаунта?
-                  {' '}
+            {isLogin ? (
+                <div> Нет аккаунта? {' '}
                   <NavLink to={REGISTRATION_ROUTE}>Зарегистрируйся!</NavLink>
                 </div>
               )
               : (
-                <div>
-                  Есть аккаунт?
-                  {' '}
+                <div> Есть аккаунт? {' '}
                   <NavLink to={LOGIN_ROUTE}>Войдите!</NavLink>
                 </div>
+
               )}
-            <Button
-              variant="outline-success"
-              onClick={click}
-            >
+            <Button variant="outline-success" onClick={click}>
               {isLogin ? 'Войти' : 'Регистрация'}
             </Button>
           </Row>
