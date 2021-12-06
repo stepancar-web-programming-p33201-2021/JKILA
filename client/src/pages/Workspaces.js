@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, Container } from 'react-bootstrap';
-// import {WORKSPACES} from "../utils/consts";
 import { observer } from 'mobx-react-lite';
 import { Context } from '../index';
 

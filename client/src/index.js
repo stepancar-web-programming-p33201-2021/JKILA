@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import UserStore from './store/UserStore';
 import WorkspaceStore from './store/WorkspaceStore';
+import ProjectStore from './store/ProjectStore';
 
 // eslint-disable-next-line import/prefer-default-export
 export const Context = createContext(null);
@@ -12,6 +13,7 @@ ReactDOM.render(
   <Context.Provider value={{
     user: new UserStore(),
     workspace: new WorkspaceStore(),
+    project: new ProjectStore(),
   }}
   >
     <App />

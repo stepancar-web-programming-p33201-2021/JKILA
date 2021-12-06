@@ -2,8 +2,9 @@
 import React, { useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { createWorkspace } from "../http/workspaceApi";
+import { observer } from 'mobx-react-lite';
 
-const CreateWorkspace = ({show, onHide}) => {
+const CreateWorkspace = observer(({show, onHide}) => {
   const [name, setName] = useState('')
   const [desc, setDesc] = useState('')
 
@@ -14,6 +15,7 @@ const CreateWorkspace = ({show, onHide}) => {
       setDesc('')
       onHide()
     });
+    location.reload();
   }
 
   return (
@@ -34,6 +36,6 @@ const CreateWorkspace = ({show, onHide}) => {
       </Modal.Footer>
     </Modal>
   );
-}
+})
 
 export default CreateWorkspace;
