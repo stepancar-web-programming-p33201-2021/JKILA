@@ -2,25 +2,22 @@
 import React from 'react';
 import { Card, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import { PROJECTS } from "../utils/consts";
+import { ISSUES } from '../utils/consts';
 import {observer} from "mobx-react-lite";
 
-const WorkspaceItem = observer(({workspace}) => {
+const ProjectItem = observer(({project}) => {
   const history = useHistory();
   return (
     <Row style={{ paddingLeft: '10%', paddingRight : '10%'}}>
-      <Card style={{ width: '100%', cursor: 'pointer' }} className="mt-3 align-items-center" onClick={() => history.push(PROJECTS + '/' + workspace.id)}>
+      <Card style={{ width: '100%', cursor: 'pointer' }} className="mt-3 align-items-center" onClick={() => history.push(ISSUES)}>
         <Card.Body>
           <Card.Title>
-            {workspace.workspace_name}
+            {project.proj_name}
           </Card.Title>
-          <Card.Text>
-            {workspace.description}
-          </Card.Text>
         </Card.Body>
       </Card>
     </Row>
   );
 });
 
-export default WorkspaceItem;
+export default ProjectItem;

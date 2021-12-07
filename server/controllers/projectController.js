@@ -2,9 +2,9 @@ const { Project } = require('../models/models');
 const customError = require('../error/customError');
 
 async function create(req, res) {
-  const { name, work } = req.body;
+  const { name, wsId } = req.body;
   const project = await Project.create({
-    proj_name: name, ws_id: work,
+    proj_name: name, ws_id: wsId,
   });
   return res.json(project);
 }
@@ -16,7 +16,8 @@ async function destroy(req, res) {
 }
 
 async function getAll(req, res) {
-  const projects = await Project.findAll();
+  const { id } = req.params;
+  const projects = await Project.findAll({ where: { ws_id: id } });
   return res.json(projects);
 }
 
