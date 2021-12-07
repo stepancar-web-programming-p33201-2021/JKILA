@@ -13,7 +13,7 @@ export const authRoutes = [
     Component: Kanban,
   },
   {
-    path: PROJECTS,
+    path: `${PROJECTS}/:id`,
     Component: Projects,
   },
   {

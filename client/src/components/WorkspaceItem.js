@@ -9,7 +9,7 @@ const WorkspaceItem = observer(({workspace}) => {
   const history = useHistory();
   return (
     <Row style={{ paddingLeft: '10%', paddingRight : '10%'}}>
-      <Card style={{ width: '100%', cursor: 'pointer' }} className="mt-3 align-items-center" onClick={() => history.push(PROJECTS)}>
+      <Card style={{ width: '100%', cursor: 'pointer' }} className="mt-3 align-items-center" onClick={() => history.push(PROJECTS + '/' + workspace.id)}>
         <Card.Body>
           <Card.Title>
             {workspace.workspace_name}

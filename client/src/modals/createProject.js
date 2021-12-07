@@ -3,13 +3,15 @@ import React, { useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { createProject } from "../http/projectApi";
 import {observer} from "mobx-react-lite";
+import {useParams} from "react-router-dom";
 
 const CreateProject = observer(({show, onHide}) => {
   const [name, setName] = useState('')
+  const { id } = useParams();
 
   const addProject = () => {
     console.log(name);
-    createProject(name).then(data => {
+    createProject(name, id).then(data => {
       setName('')
       onHide()
     });
