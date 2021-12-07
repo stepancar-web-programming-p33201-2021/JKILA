@@ -3,17 +3,17 @@ import { Row } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../index';
 
-import ProjectItem from './ProjectItem';
+import IssueItem from './IssueItem';
 
-const ProjectList = observer(() => {
+const IssueColumn = observer(() => {
   const { project } = useContext(Context);
 
   return (
     <Row className="d-flex ">
-      {project.projects
-        .map((proj) => <ProjectItem key={proj.id} project={proj} />)}
+      {project.issues
+        .map((iss) => <IssueItem key={iss.id} issue={iss} />)}
     </Row>
   );
 });
 
-export default ProjectList;
+export default IssueColumn;

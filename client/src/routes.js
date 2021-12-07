@@ -1,15 +1,15 @@
 import {
-  BOARD, ISSUES, LOGIN_ROUTE, PROJECTS, REGISTRATION_ROUTE, WORKSPACES,
+  BOARD, LOGIN_ROUTE, PROJECTS, REGISTRATION_ROUTE, WORKSPACES, ISSUE,
 } from './utils/consts';
 import Kanban from './pages/Kanban';
 import Auth from './pages/Auth';
 import Projects from './pages/Projects';
 import Workspaces from './pages/Workspaces';
-import Issues from './pages/Issue';
+import Issue from './pages/Issue';
 
 export const authRoutes = [
   {
-    path: BOARD,
+    path: `${BOARD}/:id`,
     Component: Kanban,
   },
   {
@@ -21,8 +21,8 @@ export const authRoutes = [
     Component: Workspaces,
   },
   {
-    path: ISSUES,
-    Component: Issues,
+    path: ISSUE,
+    Component: Issue,
   },
 ];
 

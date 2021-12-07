@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Issues = function () {
+const Issue = function () {
   return (
     <div>
-      ISSUES
+      ISSUE
     </div>
   );
 };
 
-export default Issues;
+export default Issue;
