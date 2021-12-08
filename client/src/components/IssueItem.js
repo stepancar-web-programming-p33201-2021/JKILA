@@ -1,15 +1,19 @@
 /* eslint-disable */
-import React from 'react';
+import React, {useState} from 'react';
 import { Card, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { ISSUE } from '../utils/consts';
-import {observer} from "mobx-react-lite";
+import { observer } from "mobx-react-lite";
+import CreateProject from "../modals/createProject";
+import Issue from "../modals/Issue";
 
 const IssueItem = observer(({issue}) => {
   const history = useHistory();
+  const [issueVisible, setIssueVisible] = useState(false);
+
   return (
-    <Row style={{ paddingLeft: '10%', paddingRight : '10%'}}>
-      <Card style={{ width: '100%', cursor: 'pointer' }} className="mt-3 align-items-center" onClick={() => history.push(ISSUE)}>
+    <div style={{ paddingLeft: '10%', paddingRight : '10%'}}>
+      <Card style={{ width: '20rem', cursor: 'pointer' }} className="mt-3 align-items-center" onClick={() => setIssueVisible(true)}>
         <Card.Body>
           <Card.Title>
             {issue.summary}
@@ -22,7 +26,8 @@ const IssueItem = observer(({issue}) => {
           </Card.Title>
         </Card.Body>
       </Card>
-    </Row>
+      <Issue show={issueVisible} onHide={() => setIssueVisible(false)} issue={issue} />
+    </div>
   );
 });
 

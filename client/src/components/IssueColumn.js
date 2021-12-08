@@ -1,18 +1,18 @@
+/* eslint-disable */
 import React, { useContext } from 'react';
-import { Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../index';
 
 import IssueItem from './IssueItem';
 
-const IssueColumn = observer(() => {
+const IssueColumn = observer((status) => {
   const { project } = useContext(Context);
-
   return (
-    <Row className="d-flex ">
-      {project.issues
+    <Container>
+      { project.issues.filter((iss) => iss.status === JSON.parse(JSON.stringify(status)).status)
         .map((iss) => <IssueItem key={iss.id} issue={iss} />)}
-    </Row>
+    </Container>
   );
 });
 

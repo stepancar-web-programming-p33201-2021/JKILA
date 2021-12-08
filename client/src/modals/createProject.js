@@ -19,15 +19,18 @@ const CreateProject = observer(({show, onHide}) => {
   }
 
   return (
-    <Modal show={show} onHide={onHide} centered>
+    <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Добавить project
+          New project
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Control value={name} className="mt-3" onChange={(e) => setName(e.target.value)} placeholder="Введите название project"/>
+          <Form.Group className="mb-3">
+            <Form.Label>Name</Form.Label>
+            <Form.Control value={name} onChange={(e) => setName(e.target.value)} placeholder="Введите название project"/>
+          </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
