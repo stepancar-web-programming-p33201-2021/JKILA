@@ -20,17 +20,18 @@ async function destroy(req, res) {
 async function getAll(req, res) {
   let issues;
   const { priority, status } = req.query;
+  const { id } = req.params;
   if (!priority && !status) {
-    issues = await Issue.findAll();
+    issues = await Issue.findAll({ where: { project_id: id } });
   }
   if (priority && !status) {
-    issues = await Issue.findAll({ where: { priority } });
+    issues = await Issue.findAll({ where: { priority, project_id: id } });
   }
   if (!priority && status) {
-    issues = await Issue.findAll({ where: { status } });
+    issues = await Issue.findAll({ where: { status, project_id: id } });
   }
   if (priority && status) {
-    issues = await Issue.findAll({ where: { priority, status } });
+    issues = await Issue.findAll({ where: { priority, status, project_id: id } });
   }
 
   return res.json(issues);
