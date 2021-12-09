@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useState } from 'react';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap';
 import { createWorkspace } from "../http/workspaceApi";
 import { observer } from 'mobx-react-lite';
 
@@ -28,12 +28,14 @@ const CreateWorkspace = observer(({show, onHide}) => {
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3">
-            <Form.Label>Name</Form.Label>
-            <Form.Control value={name} onChange={(e) => setName(e.target.value)} placeholder="Введите название workspace"/>
+            <FloatingLabel controlId="floatingName" label="Name">
+              <Form.Control value={name} onChange={(e) => setName(e.target.value)} placeholder="Введите название workspace"/>
+            </FloatingLabel>
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Description</Form.Label>
-            <Form.Control value={desc} onChange={(e) => setDesc(e.target.value)} placeholder="Description"/>
+            <FloatingLabel controlId="floatingTextarea2" label="Description">
+              <Form.Control as="textarea" style={{ height: '100px' }} value={desc} onChange={(e) => setDesc(e.target.value)} placeholder="Description"/>
+            </FloatingLabel>
           </Form.Group>
         </Form>
       </Modal.Body>

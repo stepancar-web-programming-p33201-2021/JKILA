@@ -10,10 +10,22 @@ import Issue from "../modals/Issue";
 const IssueItem = observer(({issue}) => {
   const history = useHistory();
   const [issueVisible, setIssueVisible] = useState(false);
-
+  let color
+  switch (issue.priority) {
+    case('Highest'): color = "danger";
+      break;
+    case('High'): color = "warning";
+      break;
+    case('Medium'): color = "primary";
+      break;
+    case('Low'): color = "info";
+      break;
+    case('Lowest'): color = "success";
+      break;
+  }
   return (
     <div style={{ paddingLeft: '10%', paddingRight : '10%'}}>
-      <Card style={{ width: '20rem', cursor: 'pointer' }} className="mt-3 align-items-center" onClick={() => setIssueVisible(true)}>
+      <Card style={{ width: '20rem', cursor: 'pointer' }} border={color} className="mt-3 align-items-center" onClick={() => setIssueVisible(true)}>
         <Card.Body>
           <Card.Title>
             {issue.summary}

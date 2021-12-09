@@ -14,14 +14,16 @@ const User = pool.define('user', {
 const Issue = pool.define('issue', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   due_date: { type: DataTypes.DATE },
-  summary: { type: DataTypes.STRING },
-  priority: { type: DataTypes.ENUM('Lowest', 'Low', 'Medium', 'High', 'Highest'), defaultValue: 'Low' },
+  summary: { type: DataTypes.STRING, allowNull: false },
+  description: { type: DataTypes.TEXT },
+  priority: { type: DataTypes.ENUM('Lowest', 'Low', 'Medium', 'High', 'Highest'), defaultValue: 'Medium' },
   status: { type: DataTypes.ENUM('To Do', 'In Progress', 'Done'), defaultValue: 'To Do' },
 });
 
 const Project = pool.define('project', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   proj_name: { type: DataTypes.STRING, allowNull: false },
+  description: { type: DataTypes.TEXT },
   // TODO
   // logo NN
 });
@@ -30,6 +32,7 @@ const Workspace = pool.define('workspace', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   workspace_name: { type: DataTypes.STRING, unique: true, allowNull: false },
   description: { type: DataTypes.TEXT },
+  code: { type: DataTypes.STRING },
   // TODO
   // logo NN
 });
@@ -55,10 +58,6 @@ const IssueTags = pool.define('issue_assignee', {
 });
 
 const WorkspaceUsers = pool.define('works_users', {
-  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
-});
-
-const ProjectUsers = pool.define('project_users', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
 });
 
@@ -108,14 +107,6 @@ WorkspaceUsers.belongsTo(User);
 Workspace.hasMany(WorkspaceUsers);
 User.hasMany(WorkspaceUsers);
 
-// Project - User
-Project.belongsToMany(User, { through: ProjectUsers });
-User.belongsToMany(Project, { through: ProjectUsers });
-WorkspaceUsers.belongsTo(Project);
-WorkspaceUsers.belongsTo(User);
-Project.hasMany(WorkspaceUsers);
-User.hasMany(WorkspaceUsers);
-
 // Project - Tag
 Project.belongsToMany(Tag, { through: ProjectTags });
 Tag.belongsToMany(Project, { through: ProjectTags });
@@ -134,5 +125,4 @@ module.exports = {
   IssueAssignee,
   IssueTags,
   WorkspaceUsers,
-  ProjectUsers,
 };

@@ -15,15 +15,15 @@ const Issue = observer(({ show, onHide, issue }) => {
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Label>
+          <p>
             {issue.summary}
-          </Form.Label>
-          <Form.Label>
+          </p>
+          <p>
             {issue.priority}
-          </Form.Label>
-          <Form.Label>
+          </p>
+          <p>
             {issue.status}
-          </Form.Label>
+          </p>
         </Form>
       </Modal.Body>
     </Modal>

@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useState } from 'react';
-import { Button, Form, Modal } from 'react-bootstrap';
+import {Button, FloatingLabel, Form, Modal} from 'react-bootstrap';
 import { createProject } from "../http/projectApi";
 import {observer} from "mobx-react-lite";
 import {useParams} from "react-router-dom";
@@ -28,8 +28,9 @@ const CreateProject = observer(({show, onHide}) => {
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3">
-            <Form.Label>Name</Form.Label>
-            <Form.Control value={name} onChange={(e) => setName(e.target.value)} placeholder="Введите название project"/>
+            <FloatingLabel controlId="floatingName" label="Project name">
+              <Form.Control value={name} onChange={(e) => setName(e.target.value)} placeholder="Project" />
+            </FloatingLabel>
           </Form.Group>
         </Form>
       </Modal.Body>
