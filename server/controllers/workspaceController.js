@@ -27,7 +27,9 @@ async function join(req, res, next) {
 }
 
 async function getAll(req, res) {
-  const workspaces = await Workspace.findAll();
+  const { id } = req.params;
+  const user = await User.findOne({ where: { id } });
+  const workspaces = await user.getWorkspaces();
   return res.json(workspaces);
 }
 

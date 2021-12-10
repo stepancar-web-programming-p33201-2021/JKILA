@@ -9,12 +9,12 @@ import WorkspaceList from '../components/WorkspaceList';
 import JoinWorkspace from '../modals/JoinWorkspace';
 
 const Workspaces = observer(() => {
-  const { workspace } = useContext(Context);
+  const { user, workspace } = useContext(Context);
   const [workspaceVisible, setWorkspaceVisible] = useState(false);
   const [joinVisible, setJoinVisible] = useState(false);
 
   useEffect(() => {
-    fetchWorkspaces().then((data) => workspace.setWorkspaces(data));
+    fetchWorkspaces(user.user.id).then((data) => workspace.setWorkspaces(data));
   }, []);
 
   return (

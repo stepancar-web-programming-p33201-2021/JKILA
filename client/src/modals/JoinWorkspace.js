@@ -15,6 +15,7 @@ const JoinWorkspace = observer(({show, onHide}) => {
       setCode('')
       onHide()
     });
+    location.reload();
   }
   return (
     <Modal show={show} onHide={onHide}>

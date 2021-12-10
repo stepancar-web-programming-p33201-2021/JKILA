@@ -4,7 +4,8 @@ const issueController = require('../controllers/issueController');
 const router = new Router();
 
 router.post('/', issueController.create);
-router.post('/:id', issueController.destroy);
+router.post('/delete/:id', issueController.destroy);
+router.post('/update', issueController.update);
 
 router.get('/:id', issueController.getAll);
 // router.get('/:id', issueController.getOne);

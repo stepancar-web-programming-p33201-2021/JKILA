@@ -23,6 +23,12 @@ async function destroy(req, res) {
   return res.json({ message: `Issue with ID = ${id} deleted` });
 }
 
+async function update(req, res) {
+  const { id, status } = req.body;
+  await Issue.update({ status }, { where: { id } });
+  return res.json({ message: `Issue with ID = ${id} updated` });
+}
+
 async function getAll(req, res) {
   let issues;
   const { priority, status } = req.query;
@@ -49,11 +55,12 @@ async function getOne(req, res, next) {
   if (issue === null) {
     return next(customError.badRequest('There is no ISSUE with this ID'));
   }
-  res.json(issue);
+  return res.json(issue);
 }
 
 module.exports = {
   create,
+  update,
   getOne,
   getAll,
   destroy,

@@ -19,7 +19,6 @@ const CreateIssue = observer(({ show, onHide }) => {
     createIssue(summary, id, priority, status, desc).then((data) => {
       setSummary('');
       setPriority('');
-      setStatus('');
       setDesc('');
       onHide();
     });
@@ -53,13 +52,6 @@ const CreateIssue = observer(({ show, onHide }) => {
               <option selected> Medium </option>
               <option> Low </option>
               <option> Lowest </option>
-            </Form.Select>
-          </FloatingLabel>
-          <FloatingLabel controlId="floatingSelect2" label="Status">
-            <Form.Select className="mt-2 mb-3" onChange={(e) => setStatus(e.target.value)}>
-              <option selected> To Do </option>
-              <option> In Progress </option>
-              <option> Done </option>
             </Form.Select>
           </FloatingLabel>
         </Form>

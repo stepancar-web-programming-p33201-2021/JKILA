@@ -39,7 +39,6 @@ const NavBar = observer(() => {
           ? (
             <nav className="my-2 my-md-0 me-md-3">
               <NavLink to={WORKSPACES} className="p-2 text-dark text-decoration-none"> Workspaces </NavLink>
-              <NavLink to={BOARD} className="p-2 text-dark text-decoration-none"> Board </NavLink>
               <NavLink to={WORKSPACES} className="p-2 text-dark text-decoration-none" >{user.user.username}</NavLink>
               <NavLink to={LOGIN_ROUTE} className="btn btn-outline-primary ml-5" onClick={() => logOut()}> Sign Out </NavLink>
             </nav>

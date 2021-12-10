@@ -7,6 +7,13 @@ export const createIssue = async (summary, project, priority, status, desc) => {
   return data;
 };
 
+export const updateIssue = async (id, status) => {
+  const { data } = await $host.post('api/issue/update', {
+    id, status,
+  });
+  return data;
+};
+
 export const deleteIssue = async (id) => {
   const { data } = await $host.post(`api/issue/${id}`);
   return data;

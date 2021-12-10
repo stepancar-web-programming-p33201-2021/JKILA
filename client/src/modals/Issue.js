@@ -2,14 +2,21 @@
 import React, { useState } from 'react';
 import {Form, Modal, Row} from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
+import { updateIssue } from '../http/issueApi';
 
 const Issue = observer(({ show, onHide, issue }) => {
-  // eslint-disable-next-line no-unused-vars
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState(issue.status);
+
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <h6 className="me-md-4"> {issue.status} </h6>
+        <Form.Select className="me-3" style={{width:"auto"}}
+                     onChange={(e) => {setStatus(e.target.value)
+                                       updateIssue(issue.id, e.target.value).then(r => {location.reload()})}}>
+          <option selected={status === "To Do"}> To Do </option>
+          <option selected={status === "In Progress"}> In Progress </option>
+          <option selected={status === "Done"}> Done </option>
+        </Form.Select>
         <h6> {issue.priority} </h6>
       </Modal.Header>
       <Modal.Body>

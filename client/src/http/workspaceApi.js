@@ -19,12 +19,7 @@ export const joinWorkspace = async (id, code) => {
   return data;
 };
 
-export const fetchWorkspaces = async () => {
-  const { data } = await $host.get('api/workspace');
-  return data;
-};
-
-export const fetchOneWorkspace = async (id) => {
+export const fetchWorkspaces = async (id) => {
   const { data } = await $host.get(`api/workspace/${id}`);
   return data;
 };

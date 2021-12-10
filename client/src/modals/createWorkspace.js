@@ -1,10 +1,13 @@
 /* eslint-disable */
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap';
-import { createWorkspace } from "../http/workspaceApi";
+import { createWorkspace, joinWorkspace } from '../http/workspaceApi';
 import { observer } from 'mobx-react-lite';
+import { Context } from '../index';
 
 const CreateWorkspace = observer(({show, onHide}) => {
+  const { user } = useContext(Context);
+
   const [name, setName] = useState('')
   const [desc, setDesc] = useState('')
   const [code, setCode] = useState('')
@@ -12,6 +15,8 @@ const CreateWorkspace = observer(({show, onHide}) => {
   const addWorkspace = () => {
     console.log(name, desc);
     createWorkspace(name,desc,code).then(data => {
+    });
+    joinWorkspace(user.user.id, code).then(data => {
       setName('')
       setDesc('')
       setCode('')
