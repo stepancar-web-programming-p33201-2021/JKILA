@@ -26,10 +26,9 @@ const Auth = observer(() => {
       if (isLogin) {
         data = await login(username, password);
       } else {
-        console.log(username, fName, lName, password);
         data = await registration(username, fName, lName, password);
       }
-      user.setUser(user);
+      user.setUser(data);
       user.setIsAuth(true);
       history.push(WORKSPACES);
     } catch (e) {

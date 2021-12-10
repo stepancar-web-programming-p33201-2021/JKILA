@@ -8,7 +8,6 @@ import { LOGIN_ROUTE, WORKSPACES } from '../utils/consts';
 const AppRouter = observer(() => {
   const { user } = useContext(Context);
 
-  console.log(user);
   return (
     <Switch>
       {user.isAuth === true && authRoutes.map(({ path, Component }) => (

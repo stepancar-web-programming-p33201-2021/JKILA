@@ -53,7 +53,7 @@ const IssueAssignee = pool.define('issue_assignee', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
 });
 
-const IssueTags = pool.define('issue_assignee', {
+const IssueTags = pool.define('issue_tags', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
 });
 
@@ -110,10 +110,10 @@ User.hasMany(WorkspaceUsers);
 // Project - Tag
 Project.belongsToMany(Tag, { through: ProjectTags });
 Tag.belongsToMany(Project, { through: ProjectTags });
-WorkspaceUsers.belongsTo(Project);
-WorkspaceUsers.belongsTo(Tag);
-Project.hasMany(WorkspaceUsers);
-Tag.hasMany(WorkspaceUsers);
+ProjectTags.belongsTo(Project);
+ProjectTags.belongsTo(Tag);
+Project.hasMany(ProjectTags);
+Tag.hasMany(ProjectTags);
 
 module.exports = {
   User,
@@ -125,4 +125,5 @@ module.exports = {
   IssueAssignee,
   IssueTags,
   WorkspaceUsers,
+  ProjectTags,
 };
