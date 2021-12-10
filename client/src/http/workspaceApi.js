@@ -1,8 +1,8 @@
 import { $host } from './index';
 
-export const createWorkspace = async (name, desc) => {
+export const createWorkspace = async (name, desc, code) => {
   const { data } = await $host.post('api/workspace', {
-    name, desc,
+    name, desc, code,
   });
   return data;
 };

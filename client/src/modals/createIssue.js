@@ -11,14 +11,16 @@ const CreateIssue = observer(({ show, onHide }) => {
   const [summary, setSummary] = useState('');
   const [priority, setPriority] = useState('Medium');
   const [status, setStatus] = useState('To Do');
+  const [desc, setDesc] = useState('');
   const { id } = useParams();
 
   const addIssue = () => {
     console.log(summary, priority, status);
-    createIssue(summary, id, priority, status).then((data) => {
+    createIssue(summary, id, priority, status, desc).then((data) => {
       setSummary('');
       setPriority('');
       setStatus('');
+      setDesc('');
       onHide();
     });
     location.reload();
@@ -35,8 +37,13 @@ const CreateIssue = observer(({ show, onHide }) => {
         <Form>
           <Form.Group className="mb-3">
             <FloatingLabel controlId="floatingTextarea" label="Short summary">
-              <Form.Control as="textarea" value={summary} style={{ height: '100px' }}
-                          onChange={(e) => setSummary(e.target.value)} placeholder="Summary" />
+              <Form.Control value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="Summary" />
+            </FloatingLabel>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <FloatingLabel controlId="floatingTextarea2" label="Description">
+              <Form.Control as="textarea" style={{ height: '100px' }} value={desc}
+                            onChange={(e) => setDesc(e.target.value)} placeholder="Description"/>
             </FloatingLabel>
           </Form.Group>
           <FloatingLabel controlId="floatingSelect1" label="Priority">

@@ -2,9 +2,9 @@ const { Workspace } = require('../models/models');
 const customError = require('../error/customError');
 
 async function create(req, res) {
-  const { name, desc } = req.body;
+  const { name, desc, code } = req.body;
   const workspace = await Workspace.create({
-    workspace_name: name, description: desc,
+    workspace_name: name, description: desc, code,
   });
   return res.json(workspace);
 }

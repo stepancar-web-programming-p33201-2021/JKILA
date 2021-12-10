@@ -2,9 +2,9 @@ const { Project } = require('../models/models');
 const customError = require('../error/customError');
 
 async function create(req, res) {
-  const { name, wsId } = req.body;
+  const { name, wsId, desc } = req.body;
   const project = await Project.create({
-    proj_name: name, ws_id: wsId,
+    proj_name: name, ws_id: wsId, description: desc,
   });
   return res.json(project);
 }

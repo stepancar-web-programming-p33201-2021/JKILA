@@ -9,22 +9,14 @@ const Issue = observer(({ show, onHide, issue }) => {
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          {issue.summary}
-        </Modal.Title>
+        <h6 className="me-md-4"> {issue.status} </h6>
+        <h6> {issue.priority} </h6>
       </Modal.Header>
       <Modal.Body>
-        <Form>
-          <p>
-            {issue.summary}
-          </p>
-          <p>
-            {issue.priority}
-          </p>
-          <p>
-            {issue.status}
-          </p>
-        </Form>
+        <h5 className="mb-3"> {issue.summary} </h5>
+        <h6> Description </h6>
+        <p> {issue.description} </p>
+
       </Modal.Body>
     </Modal>
   );

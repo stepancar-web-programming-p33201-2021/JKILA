@@ -3,10 +3,16 @@ const customError = require('../error/customError');
 
 async function create(req, res) {
   const {
-    summary, due, priority, status, project, creator,
+    summary, due, priority, status, project, creator, desc,
   } = req.body;
   const issue = await Issue.create({
-    summary, due_date: due, priority, status, project_id: project, creator_id: creator,
+    summary,
+    due_date: due,
+    priority,
+    status,
+    project_id: project,
+    creator_id: creator,
+    description: desc,
   });
   return res.json(issue);
 }

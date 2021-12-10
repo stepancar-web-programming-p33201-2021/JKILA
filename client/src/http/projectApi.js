@@ -1,8 +1,8 @@
 import { $host } from './index';
 
-export const createProject = async (name, wsId) => {
+export const createProject = async (name, wsId, desc) => {
   const { data } = await $host.post('api/project', {
-    name, wsId,
+    name, wsId, desc,
   });
   return data;
 };

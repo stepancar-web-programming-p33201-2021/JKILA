@@ -7,12 +7,14 @@ import { observer } from 'mobx-react-lite';
 const CreateWorkspace = observer(({show, onHide}) => {
   const [name, setName] = useState('')
   const [desc, setDesc] = useState('')
+  const [code, setCode] = useState('')
 
   const addWorkspace = () => {
     console.log(name, desc);
-    createWorkspace(name,desc).then(data => {
+    createWorkspace(name,desc,code).then(data => {
       setName('')
       setDesc('')
+      setCode('')
       onHide()
     });
     location.reload();
@@ -35,6 +37,11 @@ const CreateWorkspace = observer(({show, onHide}) => {
           <Form.Group className="mb-3">
             <FloatingLabel controlId="floatingTextarea2" label="Description">
               <Form.Control as="textarea" style={{ height: '100px' }} value={desc} onChange={(e) => setDesc(e.target.value)} placeholder="Description"/>
+            </FloatingLabel>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <FloatingLabel controlId="floatingCode" label="Code for entering">
+              <Form.Control value={code} onChange={(e) => setCode(e.target.value)} placeholder="Code"/>
             </FloatingLabel>
           </Form.Group>
         </Form>

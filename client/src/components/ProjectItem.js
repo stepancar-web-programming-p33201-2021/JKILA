@@ -14,6 +14,9 @@ const ProjectItem = observer(({project}) => {
           <Card.Title>
             {project.proj_name}
           </Card.Title>
+          <Card.Text>
+            {project.description}
+          </Card.Text>
         </Card.Body>
       </Card>
     </Row>
