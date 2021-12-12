@@ -9,12 +9,10 @@ import { Context } from '../index';
 import { fetchIssues } from '../http/issueApi';
 import CreateIssue from '../modals/createIssue';
 import IssueColumn from '../components/IssueColumn';
-// import Issue from './Issue';
 
 const Issues = observer(() => {
   const { project } = useContext(Context);
   const { id } = useParams();
-  // const match = useRouteMatch();
   const [issueVisible, setIssueVisible] = useState(false);
 
   useEffect(() => {

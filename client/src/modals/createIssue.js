@@ -1,13 +1,15 @@
 /* eslint-disable */
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import {
   Button, FloatingLabel, Form, Modal,
 } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
-import { createIssue } from '../http/issueApi';
+import { createIssue, fetchIssues } from '../http/issueApi';
+import {Context} from "../index";
 
 const CreateIssue = observer(({ show, onHide }) => {
+  const { project } = useContext(Context);
   const [summary, setSummary] = useState('');
   const [priority, setPriority] = useState('Medium');
   const [status, setStatus] = useState('To Do');
@@ -20,9 +22,9 @@ const CreateIssue = observer(({ show, onHide }) => {
       setSummary('');
       setPriority('');
       setDesc('');
+      fetchIssues(id).then((data) => project.setIssues(data));
       onHide();
     });
-    location.reload();
   };
 
   return (
