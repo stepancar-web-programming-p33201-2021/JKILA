@@ -25,3 +25,8 @@ export const fetchUsersByWs = async (id) => {
   const { data } = await $host.get(`api/user/getAllByWs/${id}`);
   return data;
 };
+
+export const fetchOneUser = async (id) => {
+  const { data } = await $host.get(`api/user/getOne/${id}`);
+  return data;
+};

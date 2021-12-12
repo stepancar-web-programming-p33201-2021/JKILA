@@ -6,7 +6,9 @@ const router = new Router();
 
 router.post('/registration', userController.registration);
 router.post('/login', userController.login);
+
 router.get('/auth', authMiddleware, userController.check);
 router.get('/getAllByWs/:id', userController.getAll);
+router.get('/getOne/:id', userController.getOne);
 
 module.exports = router;
