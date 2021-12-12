@@ -70,8 +70,8 @@ const ProjectTags = pool.define('project_tags', {
 Project.hasMany(Issue, { foreignKey: 'project_id' });
 Issue.belongsTo(Project, { foreignKey: 'project_id' });
 
-User.hasMany(Issue, { foreignKey: 'creator_id' });
-Issue.belongsTo(User, { foreignKey: 'creator_id' });
+User.hasMany(Issue, { foreignKey: 'reporter_id' });
+Issue.belongsTo(User, { foreignKey: 'reporter_id' });
 
 Workspace.hasMany(Project, { foreignKey: 'ws_id' });
 Project.belongsTo(Workspace, { foreignKey: 'ws_id' });

@@ -9,19 +9,21 @@ import { createIssue, fetchIssues } from '../http/issueApi';
 import {Context} from "../index";
 
 const CreateIssue = observer(({ show, onHide }) => {
-  const { project } = useContext(Context);
+  const { project, user } = useContext(Context);
   const [summary, setSummary] = useState('');
   const [priority, setPriority] = useState('Medium');
   const [status, setStatus] = useState('To Do');
   const [desc, setDesc] = useState('');
+  const [reporter, setReporter] = useState(user.user.id);
   const { id } = useParams();
 
   const addIssue = () => {
     console.log(summary, priority, status);
-    createIssue(summary, id, priority, status, desc).then((data) => {
+    createIssue(summary, id, priority, status, desc, reporter).then((data) => {
       setSummary('');
       setPriority('');
       setDesc('');
+      setReporter(user.user.id);
       fetchIssues(id).then((data) => project.setIssues(data));
       onHide();
     });
@@ -48,12 +50,19 @@ const CreateIssue = observer(({ show, onHide }) => {
             </FloatingLabel>
           </Form.Group>
           <FloatingLabel controlId="floatingSelect1" label="Priority">
-            <Form.Select className="mt-2 mb-3" onChange={(e) => setPriority(e.target.value)}>
+            <Form.Select className="mt-2 mb-3" onChange={(e) => setPriority(e.target.value)} defaultValue="Medium">
               <option> Highest </option>
               <option> High </option>
-              <option selected> Medium </option>
+              <option> Medium </option>
               <option> Low </option>
               <option> Lowest </option>
+            </Form.Select>
+          </FloatingLabel>
+          <FloatingLabel controlId="floatingSelect2" label="Reporter">
+            <Form.Select className="mt-2 mb-3" onChange={(e) => {setReporter(e.target.value);
+                                                        console.log(reporter)}}>
+              {project.users
+                .map((user) => <option hidden={user.id === reporter} key={user.id} value={user.id}>{user.username}</option>)}
             </Form.Select>
           </FloatingLabel>
         </Form>

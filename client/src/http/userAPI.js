@@ -20,3 +20,8 @@ export const check = async () => {
   localStorage.setItem('token', data.token);
   return jwtDecode(data.token);
 };
+
+export const fetchUsersByWs = async (id) => {
+  const { data } = await $host.get(`api/user/getAllByWs/${id}`);
+  return data;
+};

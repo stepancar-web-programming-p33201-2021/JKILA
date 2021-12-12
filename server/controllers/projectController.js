@@ -27,7 +27,7 @@ async function getOne(req, res, next) {
   if (project === null) {
     return next(customError.badRequest('There is no PROJECT with this ID'));
   }
-  res.json(project);
+  return res.json(project);
 }
 
 module.exports = {

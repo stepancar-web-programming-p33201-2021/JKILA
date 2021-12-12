@@ -20,10 +20,11 @@ const Issue = observer(({ show, onHide, issue }) => {
                                        updateIssue(issue.id, e.target.value).then
                                        (r => {fetchIssues(id).then((data) => project.setIssues(data));})
                                       }
-                              }>
-          <option selected={status === "To Do"}> To Do </option>
-          <option selected={status === "In Progress"}> In Progress </option>
-          <option selected={status === "Done"}> Done </option>
+                              }
+                     defaultValue={status}>
+          <option> To Do </option>
+          <option> In Progress </option>
+          <option> Done </option>
         </Form.Select>
         <h6> {issue.priority} </h6>
       </Modal.Header>

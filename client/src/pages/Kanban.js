@@ -6,6 +6,7 @@ import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
 import { Context } from '../index';
 
+import { fetchOneProject } from '../http/projectApi';
 import { fetchIssues } from '../http/issueApi';
 import CreateIssue from '../modals/createIssue';
 import IssueColumn from '../components/IssueColumn';
@@ -17,6 +18,7 @@ const Issues = observer(() => {
 
   useEffect(() => {
     fetchIssues(id).then((data) => project.setIssues(data));
+    fetchOneProject(id).then((data) => project.setProject(data));
   }, []);
 
   return (

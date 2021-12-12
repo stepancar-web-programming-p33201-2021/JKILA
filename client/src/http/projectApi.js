@@ -13,11 +13,11 @@ export const deleteProject = async (id) => {
 };
 
 export const fetchProjects = async (id) => {
-  const { data } = await $host.get(`api/project/${id}`);
+  const { data } = await $host.get(`api/project/all/${id}`);
   return data;
 };
 
-// export const fetchOneProject = async (id) => {
-//   const { data } = await $host.get(`api/project/${id}`);
-//   return data;
-// };
+export const fetchOneProject = async (id) => {
+  const { data } = await $host.get(`api/project/one/${id}`);
+  return data;
+};
