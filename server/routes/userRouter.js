@@ -9,6 +9,7 @@ router.post('/login', userController.login);
 
 router.get('/auth', authMiddleware, userController.check);
 router.get('/getAllByWs/:id', userController.getAll);
+router.get('/getAssignees/:id', userController.getAssignees);
 router.get('/getOne/:id', userController.getOne);
 
 module.exports = router;

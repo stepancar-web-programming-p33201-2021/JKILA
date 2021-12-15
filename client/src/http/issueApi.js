@@ -14,6 +14,13 @@ export const updateIssue = async (id, status) => {
   return data;
 };
 
+export const addIssueAssignee = async (username, id) => {
+  const { data } = await $host.post('api/issue/assignee', {
+    username, id,
+  });
+  return data;
+};
+
 export const deleteIssue = async (id) => {
   const { data } = await $host.post(`api/issue/${id}`);
   return data;

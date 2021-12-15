@@ -5,8 +5,9 @@ import {
 } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
-import { createIssue, fetchIssues } from '../http/issueApi';
+import { addIssueAssignee, createIssue, fetchIssues } from '../http/issueApi';
 import {Context} from "../index";
+import {forEach} from "react-bootstrap/ElementChildren";
 
 const CreateIssue = observer(({ show, onHide }) => {
   const { project, user } = useContext(Context);
@@ -15,7 +16,17 @@ const CreateIssue = observer(({ show, onHide }) => {
   const [status, setStatus] = useState('To Do');
   const [desc, setDesc] = useState('');
   const [reporter, setReporter] = useState(user.user.id);
+  const [assignees, setAssignees] = useState([]);
+
   const { id } = useParams();
+
+  const addAssignee = (username) => {
+    setAssignees([...assignees, username])
+  }
+
+  const removeAssignee = (user) => {
+    setAssignees(assignees.filter(i => i !== user))
+  }
 
   const addIssue = () => {
     console.log(summary, priority, status);
@@ -24,6 +35,9 @@ const CreateIssue = observer(({ show, onHide }) => {
       setPriority('');
       setDesc('');
       setReporter(user.user.id);
+      assignees.forEach((item) =>{
+        addIssueAssignee(item, data.id).then(r => {});
+      })
       fetchIssues(id).then((data) => project.setIssues(data));
       onHide();
     });
@@ -43,12 +57,14 @@ const CreateIssue = observer(({ show, onHide }) => {
               <Form.Control value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="Summary" />
             </FloatingLabel>
           </Form.Group>
+
           <Form.Group className="mb-3">
             <FloatingLabel controlId="floatingTextarea2" label="Description">
               <Form.Control as="textarea" style={{ height: '100px' }} value={desc}
                             onChange={(e) => setDesc(e.target.value)} placeholder="Description"/>
             </FloatingLabel>
           </Form.Group>
+
           <FloatingLabel controlId="floatingSelect1" label="Priority">
             <Form.Select className="mt-2 mb-3" onChange={(e) => setPriority(e.target.value)} defaultValue="Medium">
               <option> Highest </option>
@@ -58,6 +74,7 @@ const CreateIssue = observer(({ show, onHide }) => {
               <option> Lowest </option>
             </Form.Select>
           </FloatingLabel>
+
           <FloatingLabel controlId="floatingSelect2" label="Reporter">
             <Form.Select className="mt-2 mb-3" onChange={(e) => {setReporter(e.target.value);
                                                         console.log(reporter)}}>
@@ -65,6 +82,22 @@ const CreateIssue = observer(({ show, onHide }) => {
                 .map((user) => <option hidden={user.id === reporter} key={user.id} value={user.id}>{user.username}</option>)}
             </Form.Select>
           </FloatingLabel>
+
+          <FloatingLabel controlId="floatingSelect2" label="Assignees">
+            <Form.Select className="mt-2 mb-3" onChange={(e) => {addAssignee(e.target.value)}}>
+              {project.users
+                .map((user) =>
+                  <option
+                    hidden={assignees.includes(user.username)}
+                    key={user.id}
+                    value={user.username}
+                  >{user.username}
+                  </option>)}
+            </Form.Select>
+          </FloatingLabel>
+
+          {assignees.map((user) => <Button onClick={() => removeAssignee(user)}>{user}</Button>)}
+
         </Form>
       </Modal.Body>
       <Modal.Footer>

@@ -1,21 +1,22 @@
 /* eslint-disable */
-import React, {useContext, useEffect, useState} from 'react';
-import {Form, Modal, Row} from 'react-bootstrap';
+import React, { useContext, useEffect, useState } from 'react';
+import {Button, Form, Modal} from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
-import { fetchIssues, updateIssue } from '../http/issueApi';
 import { Context } from "../index";
 import { useParams } from "react-router-dom";
-import { fetchOneUser } from "../http/userAPI";
-import {fetchOneProject} from "../http/projectApi";
+import { fetchIssues, updateIssue } from '../http/issueApi';
+import { fetchAssignees, fetchOneUser } from "../http/userAPI";
 
 const Issue = observer(({ show, onHide, issue }) => {
   const { project } = useContext(Context);
   const [status, setStatus] = useState(issue.status);
   const [reporter, setReporter] = useState('');
+  const [assignees, setAssignees] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
-    fetchOneUser(issue.reporter_id).then((data) => setReporter(data))
+    fetchOneUser(issue.reporter_id).then((data) => setReporter(data));
+    fetchAssignees(issue.id).then((data) => setAssignees(data));
   }, []);
 
   return (
@@ -40,6 +41,8 @@ const Issue = observer(({ show, onHide, issue }) => {
         <p> {issue.description} </p>
         <h6> Reporter </h6>
         <p> {reporter.username} </p>
+        <h6> Assignees </h6>
+        {assignees.map((user) => <Button key={user.id}>{user.username}</Button>)}
       </Modal.Body>
     </Modal>
   );

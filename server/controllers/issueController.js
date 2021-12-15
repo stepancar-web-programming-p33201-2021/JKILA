@@ -1,4 +1,4 @@
-const { Issue } = require('../models/models');
+const { Issue, User } = require('../models/models');
 const customError = require('../error/customError');
 
 async function create(req, res) {
@@ -29,6 +29,14 @@ async function update(req, res) {
   return res.json({ message: `Issue with ID = ${id} updated` });
 }
 
+async function addAssignee(req, res) {
+  const { username, id } = req.body;
+  const issue = await Issue.findOne({ where: { id } });
+  const user = await User.findOne({ where: { username } });
+  await issue.addUser(user);
+  return res.json(issue);
+}
+
 async function getAll(req, res) {
   let issues;
   const { priority, status } = req.query;
@@ -45,7 +53,6 @@ async function getAll(req, res) {
   if (priority && status) {
     issues = await Issue.findAll({ where: { priority, status, project_id: id } });
   }
-
   return res.json(issues);
 }
 
@@ -64,4 +71,5 @@ module.exports = {
   getOne,
   getAll,
   destroy,
+  addAssignee,
 };
