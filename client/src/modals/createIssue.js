@@ -1,13 +1,13 @@
 /* eslint-disable */
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Button, FloatingLabel, Form, Modal,
 } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
 import { addIssueAssignee, createIssue, fetchIssues } from '../http/issueApi';
-import {Context} from "../index";
-import {forEach} from "react-bootstrap/ElementChildren";
+import { Context } from "../index";
+import { fetchUsersByWs } from "../http/userAPI";
 
 const CreateIssue = observer(({ show, onHide }) => {
   const { project, user } = useContext(Context);
@@ -19,6 +19,10 @@ const CreateIssue = observer(({ show, onHide }) => {
   const [assignees, setAssignees] = useState([]);
 
   const { id } = useParams();
+
+  useEffect(() => {
+    fetchUsersByWs(id).then((data) => project.setUsers(data));
+  })
 
   const addAssignee = (username) => {
     setAssignees([...assignees, username])
