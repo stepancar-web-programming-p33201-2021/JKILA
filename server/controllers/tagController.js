@@ -1,4 +1,4 @@
-const { Tag } = require('../models/models');
+const { Tag, Issue } = require('../models/models');
 const customError = require('../error/customError');
 
 async function create(req, res) {
@@ -19,6 +19,13 @@ async function getAll(req, res) {
   return res.json(tags);
 }
 
+async function getIssueTags(req, res) {
+  const { id } = req.params;
+  const issue = await Issue.findOne({ where: { id } });
+  const tags = await issue.getTags();
+  return res.json(tags);
+}
+
 async function getOne(req, res, next) {
   const { id } = req.params;
   const tag = await Tag.findOne({ where: { id } });
@@ -32,5 +39,6 @@ module.exports = {
   create,
   getOne,
   getAll,
+  getIssueTags,
   destroy,
 };

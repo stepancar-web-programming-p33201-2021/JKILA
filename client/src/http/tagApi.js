@@ -11,7 +11,12 @@ export const deleteTag = async (id) => {
 };
 
 export const fetchTags = async (id) => {
-  const { data } = await $host.get(`api/tag/${id}`);
+  const { data } = await $host.get(`api/tag/project/${id}`);
+  return data;
+};
+
+export const fetchIssueTags = async (id) => {
+  const { data } = await $host.get(`api/tag/issue/${id}`);
   return data;
 };
 

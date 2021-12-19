@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { Context } from "../index";
 import { useParams } from 'react-router-dom';
 
-import { addIssueAssignee, createIssue, fetchIssues } from '../http/issueApi';
+import { addIssueAssignee, addIssueTag, createIssue, fetchIssues } from '../http/issueApi';
 import { createTag, fetchTags } from '../http/tagApi';
 
 const CreateIssue = observer(({ show, onHide }) => {
@@ -58,6 +58,10 @@ const CreateIssue = observer(({ show, onHide }) => {
         addIssueAssignee(item, data.id).then(r => {});
       })
       setAssignees([]);
+      tags.forEach((item) =>{
+        addIssueTag(item, data.id).then(r => {});
+      })
+      setTags([]);
       fetchIssues(id).then((data) => project.setIssues(data));
       onHide();
     });

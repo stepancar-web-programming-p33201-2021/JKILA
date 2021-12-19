@@ -1,4 +1,4 @@
-const { Issue, User } = require('../models/models');
+const { Issue, User, Tag } = require('../models/models');
 const customError = require('../error/customError');
 
 async function create(req, res) {
@@ -37,6 +37,14 @@ async function addAssignee(req, res) {
   return res.json(issue);
 }
 
+async function addTag(req, res) {
+  const { tagName, id } = req.body;
+  const issue = await Issue.findOne({ where: { id } });
+  const tag = await Tag.findOne({ where: { tag_name: tagName, project_id: issue.project_id } });
+  await issue.addTag(tag);
+  return res.json(issue);
+}
+
 async function getAll(req, res) {
   let issues;
   const { priority, status } = req.query;
@@ -72,4 +80,5 @@ module.exports = {
   getAll,
   destroy,
   addAssignee,
+  addTag,
 };

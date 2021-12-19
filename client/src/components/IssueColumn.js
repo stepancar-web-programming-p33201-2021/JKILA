@@ -1,6 +1,5 @@
-/* eslint-disable */
 import React, { useContext } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../index';
 
