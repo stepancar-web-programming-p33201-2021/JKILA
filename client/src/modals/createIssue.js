@@ -1,13 +1,12 @@
 /* eslint-disable */
-import React, {useContext, useEffect, useState} from 'react';
-import {
-  Button, FloatingLabel, Form, Modal,
-} from 'react-bootstrap';
+import React, { useContext, useState } from 'react';
+import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
-import { useParams } from 'react-router-dom';
-import { addIssueAssignee, createIssue, fetchIssues } from '../http/issueApi';
 import { Context } from "../index";
-import { fetchUsersByWs } from "../http/userAPI";
+import { useParams } from 'react-router-dom';
+
+import { addIssueAssignee, createIssue, fetchIssues } from '../http/issueApi';
+import { createTag, fetchTags } from '../http/tagApi';
 
 const CreateIssue = observer(({ show, onHide }) => {
   const { project, user } = useContext(Context);
@@ -17,12 +16,12 @@ const CreateIssue = observer(({ show, onHide }) => {
   const [desc, setDesc] = useState('');
   const [reporter, setReporter] = useState(user.user.id);
   const [assignees, setAssignees] = useState([]);
+  const [tags, setTags] = useState([]);
+
+  const [tagInput, setTagInput] = useState(false);
+  const [tagName, setTagName] = useState('');
 
   const { id } = useParams();
-
-  useEffect(() => {
-    fetchUsersByWs(id).then((data) => project.setUsers(data));
-  })
 
   const addAssignee = (username) => {
     setAssignees([...assignees, username])
@@ -32,16 +31,33 @@ const CreateIssue = observer(({ show, onHide }) => {
     setAssignees(assignees.filter(i => i !== user))
   }
 
+  const addTagIssue = (name) => {
+    setTags([...tags, name])
+  }
+
+  const removeTagIssue = (name) => {
+    setTags(tags.filter(i => i !== name))
+  }
+
+  const addTag = () => {
+    createTag(tagName, id).then(() =>{
+     setTagInput(false);
+     setTagName('');
+     fetchTags(id).then((data) => project.setTags(data));
+    })
+  }
+
   const addIssue = () => {
     console.log(summary, priority, status);
     createIssue(summary, id, priority, status, desc, reporter).then((data) => {
       setSummary('');
-      setPriority('');
+      setPriority('Medium');
       setDesc('');
       setReporter(user.user.id);
       assignees.forEach((item) =>{
         addIssueAssignee(item, data.id).then(r => {});
       })
+      setAssignees([]);
       fetchIssues(id).then((data) => project.setIssues(data));
       onHide();
     });
@@ -87,7 +103,7 @@ const CreateIssue = observer(({ show, onHide }) => {
             </Form.Select>
           </FloatingLabel>
 
-          <FloatingLabel controlId="floatingSelect2" label="Assignees">
+          <FloatingLabel controlId="floatingSelect3" label="Assignees">
             <Form.Select className="mt-2 mb-3" onChange={(e) => {addAssignee(e.target.value)}}>
               {project.users
                 .map((user) =>
@@ -100,8 +116,38 @@ const CreateIssue = observer(({ show, onHide }) => {
             </Form.Select>
           </FloatingLabel>
 
-          {assignees.map((user) => <Button onClick={() => removeAssignee(user)}>{user}</Button>)}
+          {assignees.map((user) => <Button onClick={() => removeAssignee(user)}> {user} </Button>)}
 
+          <FloatingLabel controlId="floatingSelect4" label="Tags" className="my-3">
+            <Form.Select onChange={(e) => {addTagIssue(e.target.value)}}>
+              {project.tags
+                .map((tag) =>
+                  <option
+                    hidden={tags.includes(tag.tag_name)}
+                    key={tag.id}
+                    value={tag.tag_name}
+                  >{tag.tag_name}
+                  </option>)}
+            </Form.Select>
+          </FloatingLabel>
+
+          {tags.map((tag) => <Button onClick={() => removeTagIssue(tag)}> {tag} </Button>)}
+
+          <Button variant="success" className="my-2" onClick={() => {
+            if (tagInput){
+              if (tagName !== '') {
+                addTag();
+                document.getElementById('tagCr').value = '';
+              }
+              setTagInput(false);
+              document.getElementById('tagCr').style.display ='none';
+            } else {
+              setTagInput(true);
+              document.getElementById('tagCr').style.display = 'block';
+            }
+          }}>+ Create tag</Button>
+          <input id="tagCr" className="form-control" type="text" style={{display: 'none'}}
+                 onChange={(e) => setTagName(e.target.value)}/>
         </Form>
       </Modal.Body>
       <Modal.Footer>

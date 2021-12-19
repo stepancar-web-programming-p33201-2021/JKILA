@@ -8,6 +8,7 @@ import { Context } from '../index';
 
 import { fetchOneProject } from '../http/projectApi';
 import { fetchIssues } from '../http/issueApi';
+import { fetchTags } from '../http/tagApi';
 import { fetchUsersByWs } from '../http/userAPI';
 import CreateIssue from '../modals/createIssue';
 import IssueColumn from '../components/IssueColumn';
@@ -19,8 +20,11 @@ const Issues = observer(() => {
 
   useEffect(() => {
     fetchIssues(id).then((data) => project.setIssues(data));
-    fetchOneProject(id).then((data) => project.setProject(data));
-    fetchUsersByWs(project.ws_id).then((data) => project.setUsers(data));
+    fetchOneProject(id).then((data) => {
+      project.setProject(data);
+      fetchUsersByWs(data.ws_id).then((data1) => project.setUsers(data1));
+    });
+    fetchTags(id).then((data) => project.setTags(data));
   }, []);
 
   return (

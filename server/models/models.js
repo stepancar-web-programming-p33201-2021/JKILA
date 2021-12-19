@@ -61,10 +61,6 @@ const WorkspaceUsers = pool.define('works_users', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
 });
 
-const ProjectTags = pool.define('project_tags', {
-  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
-});
-
 // Relations between tables
 
 Project.hasMany(Issue, { foreignKey: 'project_id' });
@@ -81,6 +77,9 @@ Comment.belongsTo(Issue, { foreignKey: 'issue_id' });
 
 User.hasMany(Comment, { foreignKey: 'user_id' });
 Comment.belongsTo(User, { foreignKey: 'user_id' });
+
+Project.hasMany(Tag, { foreignKey: 'project_id' });
+Tag.belongsTo(Project, { foreignKey: 'project_id' });
 
 // Super Many-to-Many relationships
 // Issue - User
@@ -107,14 +106,6 @@ WorkspaceUsers.belongsTo(User);
 Workspace.hasMany(WorkspaceUsers);
 User.hasMany(WorkspaceUsers);
 
-// Project - Tag
-Project.belongsToMany(Tag, { through: ProjectTags });
-Tag.belongsToMany(Project, { through: ProjectTags });
-ProjectTags.belongsTo(Project);
-ProjectTags.belongsTo(Tag);
-Project.hasMany(ProjectTags);
-Tag.hasMany(ProjectTags);
-
 module.exports = {
   User,
   Issue,
@@ -125,5 +116,4 @@ module.exports = {
   IssueAssignee,
   IssueTags,
   WorkspaceUsers,
-  ProjectTags,
 };

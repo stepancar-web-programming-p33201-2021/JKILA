@@ -6,6 +6,7 @@ export default class ProjectStore {
     this._projects = [];
     this._issues = [];
     this._users = [];
+    this._tags = [];
     makeAutoObservable(this);
   }
 
@@ -25,6 +26,10 @@ export default class ProjectStore {
     this._users = value;
   }
 
+  setTags(value) {
+    this._tags = value;
+  }
+
   get projects() {
     return this._projects;
   }
@@ -39,5 +44,9 @@ export default class ProjectStore {
 
   get users() {
     return this._users;
+  }
+
+  get tags() {
+    return this._tags;
   }
 }

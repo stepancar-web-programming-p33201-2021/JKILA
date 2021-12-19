@@ -2,8 +2,8 @@ const { Tag } = require('../models/models');
 const customError = require('../error/customError');
 
 async function create(req, res) {
-  const { name } = req.body;
-  const tag = await Tag.create({ tag_name: name });
+  const { tagName, projectId } = req.body;
+  const tag = await Tag.create({ tag_name: tagName, project_id: projectId });
   return res.json(tag);
 }
 
@@ -14,7 +14,8 @@ async function destroy(req, res) {
 }
 
 async function getAll(req, res) {
-  const tags = await Tag.findAll();
+  const { id } = req.params;
+  const tags = await Tag.findAll({ where: { project_id: id } });
   return res.json(tags);
 }
 
@@ -24,7 +25,7 @@ async function getOne(req, res, next) {
   if (tag === null) {
     return next(customError.badRequest('There is no TAG with this ID'));
   }
-  res.json(tag);
+  return res.json(tag);
 }
 
 module.exports = {
