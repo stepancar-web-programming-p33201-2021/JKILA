@@ -8,7 +8,6 @@ import CreateProject from "../modals/createProject";
 import Issue from "../modals/Issue";
 
 const IssueItem = observer(({issue}) => {
-  const history = useHistory();
   const [issueVisible, setIssueVisible] = useState(false);
   let color
   switch (issue.priority) {

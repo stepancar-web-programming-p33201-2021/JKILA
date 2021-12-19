@@ -1,8 +1,8 @@
 import { $host } from './index';
 
-export const createIssue = async (summary, project, priority, status, desc, reporter) => {
+export const createIssue = async (summary, due, project, priority, status, desc, reporter) => {
   const { data } = await $host.post('api/issue', {
-    summary, project, priority, status, desc, reporter,
+    summary, due, project, priority, status, desc, reporter,
   });
   return data;
 };

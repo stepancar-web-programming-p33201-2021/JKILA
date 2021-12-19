@@ -14,6 +14,7 @@ const CreateIssue = observer(({ show, onHide }) => {
   const [priority, setPriority] = useState('Medium');
   const [status, setStatus] = useState('To Do');
   const [desc, setDesc] = useState('');
+  const [due, setDue] = useState('');
   const [reporter, setReporter] = useState(user.user.id);
   const [assignees, setAssignees] = useState([]);
   const [tags, setTags] = useState([]);
@@ -49,10 +50,11 @@ const CreateIssue = observer(({ show, onHide }) => {
 
   const addIssue = () => {
     console.log(summary, priority, status);
-    createIssue(summary, id, priority, status, desc, reporter).then((data) => {
+    createIssue(summary, due, id, priority, status, desc, reporter).then((data) => {
       setSummary('');
       setPriority('Medium');
       setDesc('');
+      setDue('')
       setReporter(user.user.id);
       assignees.forEach((item) =>{
         addIssueAssignee(item, data.id).then(r => {});
@@ -86,6 +88,13 @@ const CreateIssue = observer(({ show, onHide }) => {
             <FloatingLabel controlId="floatingTextarea2" label="Description">
               <Form.Control as="textarea" style={{ height: '100px' }} value={desc}
                             onChange={(e) => setDesc(e.target.value)} placeholder="Description"/>
+            </FloatingLabel>
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <FloatingLabel controlId="floatingTextarea2" label="Due date">
+              <Form.Control type="date" value={due}
+                            onChange={(e) => setDue(e.target.value)} placeholder="Due date"/>
             </FloatingLabel>
           </Form.Group>
 

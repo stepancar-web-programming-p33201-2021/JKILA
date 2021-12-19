@@ -13,7 +13,7 @@ const User = pool.define('user', {
 
 const Issue = pool.define('issue', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
-  due_date: { type: DataTypes.DATE },
+  due_date: { type: DataTypes.STRING },
   summary: { type: DataTypes.STRING, allowNull: false },
   description: { type: DataTypes.TEXT },
   priority: { type: DataTypes.ENUM('Lowest', 'Low', 'Medium', 'High', 'Highest'), defaultValue: 'Medium' },

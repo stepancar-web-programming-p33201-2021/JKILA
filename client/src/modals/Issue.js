@@ -46,6 +46,8 @@ const Issue = observer(({ show, onHide, issue }) => {
         <p> {issue.description} </p>
         <h6> Reporter </h6>
         <p> {reporter.username} </p>
+        <h6> Due date </h6>
+        <p> {issue.due_date} </p>
         <h6> Assignees </h6>
         {assignees.map((user) => <Button key={user.id}>{user.username}</Button>)}
         <h6> Tags </h6>
