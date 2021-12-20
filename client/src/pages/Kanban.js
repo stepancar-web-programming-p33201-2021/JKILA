@@ -1,9 +1,12 @@
+/* eslint-disable */
 import React, { useContext, useEffect, useState } from 'react';
 import {
   Button, Col, Container, Row,
 } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
+import { DragDropContext } from 'react-beautiful-dnd';
+
 import { Context } from '../index';
 
 import { fetchOneProject } from '../http/projectApi';
@@ -27,24 +30,28 @@ const Issues = observer(() => {
     fetchTags(id).then((data) => project.setTags(data));
   }, []);
 
+  const onDragEnd = () => {
+    console.log(1);
+    return 1;
+  };
+
   return (
     <div>
       <Container className="p-3">
-        <Row>
-          <Col>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Row>
             <IssueColumn status="To Do" />
-          </Col>
-          <Col>
             <IssueColumn status="In Progress" />
-          </Col>
-          <Col>
             <IssueColumn status="Done" />
-          </Col>
-        </Row>
+          </Row>
+        </DragDropContext>
       </Container>
       <Container className="d-flex flex-column">
         <Button variant="outline-primary" onClick={() => setIssueVisible(true)}>
           Create Issue
+        </Button>
+        <Button variant="outline-primary" onClick={() => console.log(project.issues)}>
+          Users
         </Button>
         <CreateIssue show={issueVisible} onHide={() => setIssueVisible(false)} />
       </Container>
