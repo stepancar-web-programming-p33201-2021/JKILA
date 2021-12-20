@@ -7,6 +7,7 @@ export default class ProjectStore {
     this._issues = [];
     this._users = [];
     this._tags = [];
+    this._comments = [];
     makeAutoObservable(this);
   }
 
