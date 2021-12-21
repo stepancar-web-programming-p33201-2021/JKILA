@@ -9,7 +9,7 @@ router.post('/update', issueController.update);
 router.post('/assignee', issueController.addAssignee);
 router.post('/tag', issueController.addTag);
 
-router.get('/:id', issueController.getAll);
-// router.get('/:id', issueController.getOne);
+router.get('/all/:id', issueController.getAll);
+router.get('/one/:id', issueController.getOne);
 
 module.exports = router;

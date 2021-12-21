@@ -34,11 +34,11 @@ export const deleteIssue = async (id) => {
 };
 
 export const fetchIssues = async (id) => {
-  const { data } = await $host.get(`api/issue/${id}`);
+  const { data } = await $host.get(`api/issue/all/${id}`);
   return data;
 };
 
-// export const fetchOneIssue = async (id) => {
-//   const { data } = await $host.get(`api/issue/${id}`);
-//   return data;
-// };
+export const fetchOneIssue = async (id) => {
+  const { data } = await $host.get(`api/issue/one/${id}`);
+  return data;
+};
