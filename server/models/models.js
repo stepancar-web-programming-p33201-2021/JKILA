@@ -13,15 +13,17 @@ const User = pool.define('user', {
 
 const Issue = pool.define('issue', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
-  due_date: { type: DataTypes.DATE },
-  summary: { type: DataTypes.STRING },
-  priority: { type: DataTypes.ENUM('Lowest', 'Low', 'Medium', 'High', 'Highest'), defaultValue: 'Low' },
+  due_date: { type: DataTypes.DATEONLY },
+  summary: { type: DataTypes.STRING, allowNull: false },
+  description: { type: DataTypes.TEXT },
+  priority: { type: DataTypes.ENUM('Lowest', 'Low', 'Medium', 'High', 'Highest'), defaultValue: 'Medium' },
   status: { type: DataTypes.ENUM('To Do', 'In Progress', 'Done'), defaultValue: 'To Do' },
 });
 
 const Project = pool.define('project', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   proj_name: { type: DataTypes.STRING, allowNull: false },
+  description: { type: DataTypes.TEXT },
   // TODO
   // logo NN
 });
@@ -30,6 +32,7 @@ const Workspace = pool.define('workspace', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   workspace_name: { type: DataTypes.STRING, unique: true, allowNull: false },
   description: { type: DataTypes.TEXT },
+  code: { type: DataTypes.STRING },
   // TODO
   // logo NN
 });
@@ -50,19 +53,11 @@ const IssueAssignee = pool.define('issue_assignee', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
 });
 
-const IssueTags = pool.define('issue_assignee', {
+const IssueTags = pool.define('issue_tags', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
 });
 
 const WorkspaceUsers = pool.define('works_users', {
-  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
-});
-
-const ProjectUsers = pool.define('project_users', {
-  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
-});
-
-const ProjectTags = pool.define('project_tags', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
 });
 
@@ -71,8 +66,8 @@ const ProjectTags = pool.define('project_tags', {
 Project.hasMany(Issue, { foreignKey: 'project_id' });
 Issue.belongsTo(Project, { foreignKey: 'project_id' });
 
-User.hasMany(Issue, { foreignKey: 'creator_id' });
-Issue.belongsTo(User, { foreignKey: 'creator_id' });
+User.hasMany(Issue, { foreignKey: 'reporter_id' });
+Issue.belongsTo(User, { foreignKey: 'reporter_id' });
 
 Workspace.hasMany(Project, { foreignKey: 'ws_id' });
 Project.belongsTo(Workspace, { foreignKey: 'ws_id' });
@@ -82,6 +77,9 @@ Comment.belongsTo(Issue, { foreignKey: 'issue_id' });
 
 User.hasMany(Comment, { foreignKey: 'user_id' });
 Comment.belongsTo(User, { foreignKey: 'user_id' });
+
+Project.hasMany(Tag, { foreignKey: 'project_id' });
+Tag.belongsTo(Project, { foreignKey: 'project_id' });
 
 // Super Many-to-Many relationships
 // Issue - User
@@ -108,22 +106,6 @@ WorkspaceUsers.belongsTo(User);
 Workspace.hasMany(WorkspaceUsers);
 User.hasMany(WorkspaceUsers);
 
-// Project - User
-Project.belongsToMany(User, { through: ProjectUsers });
-User.belongsToMany(Project, { through: ProjectUsers });
-WorkspaceUsers.belongsTo(Project);
-WorkspaceUsers.belongsTo(User);
-Project.hasMany(WorkspaceUsers);
-User.hasMany(WorkspaceUsers);
-
-// Project - Tag
-Project.belongsToMany(Tag, { through: ProjectTags });
-Tag.belongsToMany(Project, { through: ProjectTags });
-WorkspaceUsers.belongsTo(Project);
-WorkspaceUsers.belongsTo(Tag);
-Project.hasMany(WorkspaceUsers);
-Tag.hasMany(WorkspaceUsers);
-
 module.exports = {
   User,
   Issue,
@@ -134,5 +116,4 @@ module.exports = {
   IssueAssignee,
   IssueTags,
   WorkspaceUsers,
-  ProjectUsers,
 };

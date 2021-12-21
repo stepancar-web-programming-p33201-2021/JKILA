@@ -1,10 +1,10 @@
-const { Comment } = require('../models/models');
+const { Comment, Tag, Issue} = require('../models/models');
 const customError = require('../error/customError');
 
 async function create(req, res) {
-  const { body, user, issue } = req.body;
+  const { body, author, issue } = req.body;
   const comment = await Comment.create({
-    body, user_id: user, issue_id: issue,
+    body, user_id: author, issue_id: issue,
   });
   return res.json(comment);
 }
@@ -16,7 +16,8 @@ async function destroy(req, res) {
 }
 
 async function getAll(req, res) {
-  const comments = await Comment.findAll();
+  const { id } = req.params;
+  const comments = await Comment.findAll({ where: { issue_id: id } });
   return res.json(comments);
 }
 

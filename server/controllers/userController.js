@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const customError = require('../error/customError');
 const config = require('../config/default.json');
-const { User } = require('../models/models');
+const { User, Workspace, Issue } = require('../models/models');
 
 const generateJwt = (id, username, role) => jwt.sign(
   { id, username, role },
@@ -48,8 +48,31 @@ async function check(req, res, next) {
   return res.json({ token });
 }
 
+async function getAll(req, res) {
+  const { id } = req.params;
+  const workspace = await Workspace.findOne({ where: { id } });
+  const users = await workspace.getUsers();
+  return res.json(users);
+}
+
+async function getAssignees(req, res) {
+  const { id } = req.params;
+  const issue = await Issue.findOne({ where: { id } });
+  const users = await issue.getUsers();
+  return res.json(users);
+}
+
+async function getOne(req, res) {
+  const { id } = req.params;
+  const user = await User.findOne({ where: { id } });
+  return res.json(user);
+}
+
 module.exports = {
   registration,
   login,
   check,
+  getAll,
+  getOne,
+  getAssignees,
 };

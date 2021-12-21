@@ -6,7 +6,7 @@ const router = new Router();
 router.post('/', projectController.create);
 router.post('/:id', projectController.destroy);
 
-router.get('/:id', projectController.getAll);
-// router.get('/:id', projectController.getOne);
+router.get('/all/:id', projectController.getAll);
+router.get('/one/:id', projectController.getOne);
 
 module.exports = router;

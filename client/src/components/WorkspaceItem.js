@@ -15,7 +15,12 @@ const WorkspaceItem = observer(({workspace}) => {
             {workspace.workspace_name}
           </Card.Title>
           <Card.Text>
-            {workspace.description}
+            <p>
+              {workspace.description}
+            </p>
+            <p>
+              Code: {workspace.code}
+            </p>
           </Card.Text>
         </Card.Body>
       </Card>

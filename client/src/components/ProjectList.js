@@ -11,7 +11,7 @@ const ProjectList = observer(() => {
   return (
     <Row className="d-flex ">
       {project.projects
-        .map((work) => <ProjectItem key={work.id} project={work} />)}
+        .map((proj) => <ProjectItem key={proj.id} project={proj} />)}
     </Row>
   );
 });

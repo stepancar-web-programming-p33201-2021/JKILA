@@ -4,9 +4,8 @@ const workspaceController = require('../controllers/workspaceController');
 const router = new Router();
 
 router.post('/', workspaceController.create);
-router.post('/:id', workspaceController.destroy);
+router.post('/join', workspaceController.join);
 
-router.get('/', workspaceController.getAll);
-router.get('/:id', workspaceController.getOne);
+router.get('/:id', workspaceController.getAll);
 
 module.exports = router;

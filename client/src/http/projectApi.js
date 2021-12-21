@@ -1,8 +1,8 @@
 import { $host } from './index';
 
-export const createProject = async (name, wsId) => {
+export const createProject = async (name, wsId, desc) => {
   const { data } = await $host.post('api/project', {
-    name, wsId,
+    name, wsId, desc,
   });
   return data;
 };
@@ -13,11 +13,11 @@ export const deleteProject = async (id) => {
 };
 
 export const fetchProjects = async (id) => {
-  const { data } = await $host.get(`api/project/${id}`);
+  const { data } = await $host.get(`api/project/all/${id}`);
   return data;
 };
 
-// export const fetchOneProject = async (id) => {
-//   const { data } = await $host.get(`api/project/${id}`);
-//   return data;
-// };
+export const fetchOneProject = async (id) => {
+  const { data } = await $host.get(`api/project/one/${id}`);
+  return data;
+};

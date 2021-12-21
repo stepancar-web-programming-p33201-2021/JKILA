@@ -10,8 +10,7 @@ const WorkspaceList = observer(() => {
 
   return (
     <Row className="d-flex ">
-      {workspace.workspaces
-        .map((work) => <WorkspaceItem key={work.id} workspace={work} />)}
+      {workspace.workspaces.map((work) => <WorkspaceItem key={work.id} workspace={work} />)}
     </Row>
   );
 });

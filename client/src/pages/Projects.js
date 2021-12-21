@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
 import { Context } from '../index';
 
+import { fetchUsersByWs } from '../http/userAPI';
 import { fetchProjects } from '../http/projectApi';
 import CreateProject from '../modals/createProject';
 import ProjectList from '../components/ProjectList';
@@ -15,6 +16,7 @@ const Projects = observer(() => {
 
   useEffect(() => {
     fetchProjects(id).then((data) => project.setProjects(data));
+    fetchUsersByWs(id).then((data) => project.setUsers(data));
   }, []);
 
   return (

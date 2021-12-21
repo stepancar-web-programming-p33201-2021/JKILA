@@ -6,7 +6,6 @@ const router = new Router();
 router.post('/', commentController.create);
 router.post('/:id', commentController.destroy);
 
-router.get('/', commentController.getAll);
-router.get('/:id', commentController.getOne);
+router.get('/:id', commentController.getAll);
 
 module.exports = router;
