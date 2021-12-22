@@ -24,7 +24,7 @@ const Issue = observer(({ show, onHide, issue }) => {
   const addComment = () => {
     createComment(body, user.user.id, issue.id).then(() =>{
       setBody('');
-      fetchComments(id).then((data) => setComments(data));
+      fetchComments(issue.id).then((data) => setComments(data));
     })
   }
 
