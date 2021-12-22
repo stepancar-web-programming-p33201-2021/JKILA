@@ -7,7 +7,7 @@ export default class ProjectStore {
     this._issues = [];
     this._users = [];
     this._tags = [];
-    this._comments = [];
+    this._myFilter = null;
     makeAutoObservable(this);
   }
 
@@ -31,6 +31,10 @@ export default class ProjectStore {
     this._tags = value;
   }
 
+  setMyFilter(value) {
+    this._myFilter = value;
+  }
+
   get projects() {
     return this._projects;
   }
@@ -49,5 +53,9 @@ export default class ProjectStore {
 
   get tags() {
     return this._tags;
+  }
+
+  get myFilter() {
+    return this._myFilter;
   }
 }

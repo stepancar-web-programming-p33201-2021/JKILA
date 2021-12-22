@@ -33,8 +33,12 @@ export const deleteIssue = async (id) => {
   return data;
 };
 
-export const fetchIssues = async (id) => {
-  const { data } = await $host.get(`api/issue/all/${id}`);
+export const fetchIssues = async (id, myFilter) => {
+  const { data } = await $host.get(`api/issue/all/${id}`, {
+    params: {
+      myFilter,
+    },
+  });
   return data;
 };
 

@@ -1,6 +1,7 @@
+/* eslint-disable */
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  Button, Container, Row,
+  Button, Container, Row, ToggleButton,
 } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
@@ -16,18 +17,26 @@ import CreateIssue from '../modals/createIssue';
 import IssueColumn from '../components/IssueColumn';
 
 const Issues = observer(() => {
-  const { project } = useContext(Context);
+  const { project, user } = useContext(Context);
   const { id } = useParams();
   const [issueVisible, setIssueVisible] = useState(false);
+
+  const [active, setActive] = useState(false);
 
   useEffect(() => {
     fetchOneProject(id).then((data) => {
       project.setProject(data);
       fetchUsersByWs(data.ws_id).then((data1) => project.setUsers(data1));
     });
-    fetchIssues(id).then((data) => project.setIssues(data));
+    fetchIssues(id, null).then((data) => project.setIssues(data));
     fetchTags(id).then((data) => project.setTags(data));
+    project.setMyFilter(null);
   }, []);
+
+  useEffect(() => {
+    fetchIssues(id, project.myFilter).then((data) => project.setIssues(data));
+    console.log(project.myFilter);
+  }, [project.myFilter]);
 
   const onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
@@ -35,7 +44,7 @@ const Issues = observer(() => {
       return;
     }
     const issue = project.issues.find((iss) => iss.id === draggableId);
-    console.log(issue.status);
+    // console.log(issue.status);
 
     if (destination.droppableId !== source.droppableId) {
       issue.status = destination.droppableId;
@@ -44,8 +53,21 @@ const Issues = observer(() => {
     }
   };
 
+  const addMyFilter = () => {
+    active ? setActive(false) : setActive(true);
+    if (project.myFilter === null) {
+      project.setMyFilter(user.user.id);
+    } else {
+      project.setMyFilter(null);
+    }
+  };
+
   return (
     <div>
+      <Container className="p-3">
+        <h3>Filters</h3>
+        <ToggleButton id="toggle-check" type="checkbox" variant="secondary" active={active} value="1" onClick={() => addMyFilter()}>Only My Issues</ToggleButton>
+      </Container>
       <Container className="p-3">
         <DragDropContext onDragEnd={onDragEnd}>
           <Row>

@@ -1,4 +1,6 @@
-const { Issue, User, Tag } = require('../models/models');
+const {
+  Issue, User, Tag, IssueAssignee,
+} = require('../models/models');
 const customError = require('../error/customError');
 
 async function create(req, res) {
@@ -46,21 +48,40 @@ async function addTag(req, res) {
 }
 
 async function getAll(req, res) {
-  let issues;
-  const { priority, status } = req.query;
+  const { myFilter } = req.query;
   const { id } = req.params;
-  if (!priority && !status) {
+  let issues;
+  console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+  console.log(myFilter);
+  console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+  if (myFilter === undefined) {
     issues = await Issue.findAll({ where: { project_id: id } });
+  } else {
+    issues = await Issue.findAll({
+      where: {
+        project_id: id,
+      },
+      include: [{
+        model: IssueAssignee,
+        where: {
+          userId: myFilter,
+        },
+      }],
+    });
   }
-  if (priority && !status) {
-    issues = await Issue.findAll({ where: { priority, project_id: id } });
-  }
-  if (!priority && status) {
-    issues = await Issue.findAll({ where: { status, project_id: id } });
-  }
-  if (priority && status) {
-    issues = await Issue.findAll({ where: { priority, status, project_id: id } });
-  }
+
+  // if (!priority && !status) {
+  //   issues = await Issue.findAll({ where: { project_id: id } });
+  // }
+  // if (priority && !status) {
+  //   issues = await Issue.findAll({ where: { priority, project_id: id } });
+  // }
+  // if (!priority && status) {
+  //   issues = await Issue.findAll({ where: { status, project_id: id } });
+  // }
+  // if (priority && status) {
+  //   issues = await Issue.findAll({ where: { priority, status, project_id: id } });
+  // }
   return res.json(issues);
 }
 

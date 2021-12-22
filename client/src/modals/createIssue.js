@@ -65,6 +65,7 @@ const CreateIssue = observer(({ show, onHide }) => {
       })
       setTags([]);
       fetchIssues(id).then((data) => project.setIssues(data));
+      console.log(project.issues);
       onHide();
     });
   };
