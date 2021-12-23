@@ -10,7 +10,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { Context } from '../index';
 
 import { fetchOneProject } from '../http/projectApi';
-import { fetchIssues, updateIssue } from '../http/issueApi';
+import {fetchIssues, updateIssueStatus} from '../http/issueApi';
 import { fetchTags } from '../http/tagApi';
 import { fetchUsersByWs } from '../http/userAPI';
 import CreateIssue from '../modals/createIssue';
@@ -47,7 +47,7 @@ const Issues = observer(() => {
 
     if (destination.droppableId !== source.droppableId) {
       issue.status = destination.droppableId;
-      updateIssue(draggableId, destination.droppableId)
+      updateIssueStatus(draggableId, destination.droppableId)
         .then(() => { });
     }
   };
