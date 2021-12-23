@@ -6,6 +6,7 @@ const router = new Router();
 router.post('/', issueController.create);
 router.post('/delete/:id', issueController.destroy);
 router.post('/update', issueController.update);
+router.post('/upd_status', issueController.updateStatus);
 router.post('/assignee', issueController.addAssignee);
 router.post('/tag', issueController.addTag);
 

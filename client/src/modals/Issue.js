@@ -1,14 +1,15 @@
 /* eslint-disable */
 import React, { useContext, useEffect, useState } from 'react';
-import {Button, FloatingLabel, Form, Modal} from 'react-bootstrap';
+import {Button, Container, FloatingLabel, Form, Modal} from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { Context } from "../index";
 import { useParams } from "react-router-dom";
 
-import { fetchIssues, updateIssue } from '../http/issueApi';
+import {fetchIssues, updateIssueStatus} from '../http/issueApi';
 import { fetchAssignees, fetchOneUser } from "../http/userAPI";
 import {fetchIssueTags} from "../http/tagApi";
 import {createComment, fetchComments} from "../http/commentApi";
+import UpdateIssue from "./updateIssue";
 
 const Issue = observer(({ show, onHide, issue }) => {
   const { project, user } = useContext(Context);
@@ -18,6 +19,7 @@ const Issue = observer(({ show, onHide, issue }) => {
   const [tags, setTags] = useState([]);
   const [body, setBody] = useState('');
   const [comments, setComments] = useState([]);
+  const [editVisible, setEditVisible] = useState(false);
 
   const { id } = useParams();
 
@@ -40,7 +42,7 @@ const Issue = observer(({ show, onHide, issue }) => {
       <Modal.Header closeButton>
         <Form.Select className="me-3" style={{width:"auto"}}
                      onChange={(e) => {setStatus(e.target.value)
-                                       updateIssue(issue.id, e.target.value).then
+                                       updateIssueStatus(issue.id, e.target.value).then
                                        (r => {fetchIssues(id).then((data) => project.setIssues(data));})
                                       }
                               }
@@ -63,6 +65,12 @@ const Issue = observer(({ show, onHide, issue }) => {
         {assignees.map((user) => <Button key={user.id}>{user.username}</Button>)}
         <h6> Tags </h6>
         {tags.map((tag) => <Button variant="warning" key={tag.id}>{tag.tag_name}</Button>)}
+        <Container className="d-flex flex-column">
+          <Button variant="outline-primary" onClick={() => setEditVisible(true)}>
+            update Issue
+          </Button>
+          <UpdateIssue show={editVisible} onHide={() => setEditVisible(false)} issue = {issue} />
+        </Container>
         <Form>
           <Form.Group className="mb-3">
             <FloatingLabel controlId="floatingTextarea2" label="Comments">
