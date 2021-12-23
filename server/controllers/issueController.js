@@ -26,6 +26,20 @@ async function destroy(req, res) {
 }
 
 async function update(req, res) {
+  const {
+    id, summary, due, status, priority, desc,
+  } = req.body;
+  await Issue.update({
+    due_date: due,
+    status,
+    summary,
+    priority,
+    desc,
+  }, { where: { id } });
+  return res.json({ message: `Issue with ID = ${id} updated` });
+}
+
+async function updateStatus(req, res) {
   const { id, status } = req.body;
   await Issue.update({ status }, { where: { id } });
   return res.json({ message: `Issue with ID = ${id} updated` });
@@ -97,6 +111,7 @@ async function getOne(req, res, next) {
 module.exports = {
   create,
   update,
+  updateStatus,
   getOne,
   getAll,
   destroy,

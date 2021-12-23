@@ -7,8 +7,15 @@ export const createIssue = async (summary, due, project, priority, status, desc,
   return data;
 };
 
-export const updateIssue = async (id, status) => {
+export const updateIssue = async (id, summary, due, status, priority, desc) => {
   const { data } = await $host.post('api/issue/update', {
+    id, summary, due, status, priority, desc,
+  });
+  return data;
+};
+
+export const updateIssueStatus = async (id, status) => {
+  const { data } = await $host.post('api/issue/upd_status', {
     id, status,
   });
   return data;
