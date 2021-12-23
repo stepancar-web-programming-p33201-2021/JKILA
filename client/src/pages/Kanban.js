@@ -21,7 +21,7 @@ const Issues = observer(() => {
   const { id } = useParams();
   const [issueVisible, setIssueVisible] = useState(false);
 
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(null);
 
   useEffect(() => {
     fetchOneProject(id).then((data) => {
@@ -44,7 +44,6 @@ const Issues = observer(() => {
       return;
     }
     const issue = project.issues.find((iss) => iss.id === draggableId);
-    // console.log(issue.status);
 
     if (destination.droppableId !== source.droppableId) {
       issue.status = destination.droppableId;
@@ -53,12 +52,12 @@ const Issues = observer(() => {
     }
   };
 
-  const addMyFilter = () => {
-    active ? setActive(false) : setActive(true);
-    if (project.myFilter === null) {
-      project.setMyFilter(user.user.id);
-    } else {
+  const addFilter = (filter) => {
+    project.setMyFilter(filter);
+    setActive(filter);
+    if (active === filter){
       project.setMyFilter(null);
+      setActive(null);
     }
   };
 
@@ -66,7 +65,23 @@ const Issues = observer(() => {
     <div>
       <Container className="p-3">
         <h3>Filters</h3>
-        <ToggleButton id="toggle-check" type="checkbox" variant="secondary" active={active} value="1" onClick={() => addMyFilter()}>Only My Issues</ToggleButton>
+        {project.users.map((user) =>
+          <ToggleButton
+            className="me-md-3"
+            variant="secondary"
+            value={user.id}
+            active={user.id === active}
+            onClick={() => addFilter(user.id)}
+          >
+            {user.username}
+          </ToggleButton>)}
+        <Button variant="secondary"
+                value={user.user.id}
+                active={user.user.id === active}
+                onClick={() => addFilter(user.user.id)}
+        >
+          Only My Issues
+        </Button>
       </Container>
       <Container className="p-3">
         <DragDropContext onDragEnd={onDragEnd}>
