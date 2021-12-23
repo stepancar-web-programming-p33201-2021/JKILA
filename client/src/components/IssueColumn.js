@@ -10,6 +10,10 @@ import IssueItem from './IssueItem';
 
 const IssueColumn = observer((status) => {
   const { project } = useContext(Context);
+  const issuesList = project.issues
+    .filter((iss) => iss.status === JSON.parse(JSON.stringify(status)).status)
+    .map((iss, index) => <IssueItem key={iss.id} issue={iss} index={index} />)
+
   return (
     <Droppable droppableId={JSON.parse(JSON.stringify(status)).status}>
     {provided => (
@@ -18,10 +22,7 @@ const IssueColumn = observer((status) => {
         <Container>
           <div>{JSON.parse(JSON.stringify(status)).status}</div>
               <div>
-                {project.issues
-                  .filter((iss) => iss.status === JSON.parse(JSON.stringify(status)).status)
-                  .map((iss, index) => <IssueItem key={iss.id} issue={iss} index={index} />)
-                }
+                {issuesList}
                 {provided.placeholder}
               </div>
         </Container>
