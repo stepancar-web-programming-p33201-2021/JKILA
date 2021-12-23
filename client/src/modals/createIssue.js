@@ -112,6 +112,7 @@ const CreateIssue = observer(({ show, onHide }) => {
           <FloatingLabel controlId="floatingSelect2" label="Reporter">
             <Form.Select className="mt-2 mb-3" onChange={(e) => {setReporter(e.target.value);
                                                         console.log(reporter)}}>
+              <option style={{display:'none'}}> Выберите Reporter </option>
               {project.users
                 .map((user) => <option hidden={user.id === reporter} key={user.id} value={user.id}>{user.username}</option>)}
             </Form.Select>
@@ -119,6 +120,7 @@ const CreateIssue = observer(({ show, onHide }) => {
 
           <FloatingLabel controlId="floatingSelect3" label="Assignees">
             <Form.Select className="mt-2 mb-3" onChange={(e) => {addAssignee(e.target.value)}}>
+              <option style={{display:'none'}}> Выберите Assignee </option>
               {project.users
                 .map((user) =>
                   <option
@@ -134,6 +136,7 @@ const CreateIssue = observer(({ show, onHide }) => {
 
           <FloatingLabel controlId="floatingSelect4" label="Tags" className="my-3">
             <Form.Select onChange={(e) => {addTagIssue(e.target.value)}}>
+              <option style={{display:'none'}}> Выберите Tag </option>
               {project.tags
                 .map((tag) =>
                   <option
