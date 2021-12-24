@@ -34,7 +34,7 @@ async function update(req, res) {
     status,
     summary,
     priority,
-    desc,
+    description: desc,
   }, { where: { id } });
   return res.json({ message: `Issue with ID = ${id} updated` });
 }
