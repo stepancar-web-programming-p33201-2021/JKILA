@@ -9,6 +9,16 @@ async function create(req, res) {
   return res.json(workspace);
 }
 
+async function update(req, res) {
+  const {
+    id, name, desc, code
+  } = req.body;
+  await Workspace.update({
+    workspace_name: name, description: desc, code,
+  }, { where: { id } });
+  return res.json({ message: `Workspace with ID = ${id} updated` });
+}
+
 async function destroy(req, res) {
   const { id } = req.params;
   await Workspace.destroy({ where: { id } });
@@ -48,4 +58,5 @@ module.exports = {
   join,
   getAll,
   destroy,
+  update,
 };
