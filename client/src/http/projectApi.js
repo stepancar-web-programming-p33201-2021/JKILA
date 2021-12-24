@@ -7,6 +7,13 @@ export const createProject = async (name, wsId, desc) => {
   return data;
 };
 
+export const updateProject = async (id, name, desc) => {
+  const { data } = await $host.post('api/project/update', {
+    id, name, desc,
+  });
+  return data;
+};
+
 export const deleteProject = async (id) => {
   const { data } = await $host.post(`api/project/${id}`);
   return data;

@@ -49,18 +49,12 @@ const UpdateIssue = observer(({ show, onHide, issue }) => {
 
   const editIssue = () => {
     updateIssue(issue.id, summary, due, status, priority, desc).then((data) => {
-      setSummary('');
-      setPriority('');
-      setDesc('');
-      setDue('')
       assignees.forEach((item) =>{
         addIssueAssignee(item, issue.id).then(r => {});
       })
-      setAssignees([]);
       tags.forEach((item) =>{
         addIssueTag(item, issue.id).then(r => {});
       })
-      setTags([]);
       fetchIssues(id).then((data) => project.setIssues(data));
       onHide();
     });
