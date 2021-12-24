@@ -8,6 +8,7 @@ export default class ProjectStore {
     this._users = [];
     this._tags = [];
     this._myFilter = null;
+    this._reloadComments = null;
     makeAutoObservable(this);
   }
 
@@ -33,6 +34,14 @@ export default class ProjectStore {
 
   setMyFilter(value) {
     this._myFilter = value;
+  }
+
+  setReloadComments(value) {
+    this._reloadComments = value;
+  }
+
+  get reloadComments() {
+    return this._reloadComments;
   }
 
   get projects() {
