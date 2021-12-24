@@ -1,11 +1,13 @@
 /* eslint-disable */
-import React, { useContext, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { Context } from "../index";
 import { useParams } from 'react-router-dom';
 
-import {fetchIssues, updateIssue} from '../http/issueApi';
+import {addIssueAssignee, addIssueTag, fetchIssues, updateIssue} from '../http/issueApi';
+import { fetchIssueTags } from "../http/tagApi";
+import {fetchAssignees} from "../http/userAPI";
 
 
 const UpdateIssue = observer(({ show, onHide, issue }) => {
@@ -15,8 +17,35 @@ const UpdateIssue = observer(({ show, onHide, issue }) => {
   const [due, setDue] = useState(issue.due_date);
   const [priority, setPriority] = useState(issue.priority);
   const [status, setStatus] = useState(issue.status);
+  const [assignees, setAssignees] = useState([]);
+  const [tags, setTags] = useState([]);
 
   const { id } = useParams();
+
+  useEffect(() => {
+    fetchIssueTags(issue.id).then((data) => {
+      data.map((tag) => addTagIssue(tag.tag_name))
+    });
+    fetchAssignees(issue.id).then((data) => {
+      data.map((user) => addAssignee(user.username))
+    });
+  }, []);
+
+  const addAssignee = (username) => {
+    setAssignees([...assignees, username])
+  }
+
+  const removeAssignee = (user) => {
+    setAssignees(assignees.filter(i => i !== user))
+  }
+
+  const addTagIssue = (name) => {
+    setTags([...tags, name])
+  }
+
+  const removeTagIssue = (name) => {
+    setTags(tags.filter(i => i !== name))
+  }
 
   const editIssue = () => {
     updateIssue(issue.id, summary, due, status, priority, desc).then((data) => {
@@ -24,6 +53,14 @@ const UpdateIssue = observer(({ show, onHide, issue }) => {
       setPriority('');
       setDesc('');
       setDue('')
+      assignees.forEach((item) =>{
+        addIssueAssignee(item, issue.id).then(r => {});
+      })
+      setAssignees([]);
+      tags.forEach((item) =>{
+        addIssueTag(item, issue.id).then(r => {});
+      })
+      setTags([]);
       fetchIssues(id).then((data) => project.setIssues(data));
       onHide();
     });
@@ -75,6 +112,38 @@ const UpdateIssue = observer(({ show, onHide, issue }) => {
               <option> Lowest </option>
             </Form.Select>
           </FloatingLabel>
+
+          <FloatingLabel controlId="floatingSelect3" label="Assignees">
+            <Form.Select className="mt-2 mb-3" onChange={(e) => {addAssignee(e.target.value)}}>
+              <option style={{display:'none'}}> Выберите Assignee </option>
+              {project.users
+                .map((user) =>
+                  <option
+                    hidden={assignees.includes(user.username)}
+                    key={user.id}
+                    value={user.username}
+                  >{user.username}
+                  </option>)}
+            </Form.Select>
+          </FloatingLabel>
+
+          {assignees.map((user) => <Button onClick={() => removeAssignee(user)}> {user} </Button>)}
+
+          <FloatingLabel controlId="floatingSelect4" label="Tags" className="my-3">
+            <Form.Select onChange={(e) => {addTagIssue(e.target.value)}}>
+              <option style={{display:'none'}}> Выберите Tag </option>
+              {project.tags
+                .map((tag) =>
+                  <option
+                    hidden={tags.includes(tag.tag_name)}
+                    key={tag.id}
+                    value={tag.tag_name}
+                  >{tag.tag_name}
+                  </option>)}
+            </Form.Select>
+          </FloatingLabel>
+
+          {tags.map((tag) => <Button onClick={() => removeTagIssue(tag)}> {tag} </Button>)}
 
         </Form>
       </Modal.Body>
