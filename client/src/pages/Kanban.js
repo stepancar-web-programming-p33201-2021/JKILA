@@ -4,7 +4,7 @@ import {
   Button, Container, Row, ToggleButton,
 } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
-import { useParams } from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import { DragDropContext } from 'react-beautiful-dnd';
 
 import { Context } from '../index';
@@ -18,6 +18,7 @@ import IssueColumn from '../components/IssueColumn';
 
 const Issues = observer(() => {
   const { project, user } = useContext(Context);
+  const history = useHistory();
   const { id } = useParams();
   const [issueVisible, setIssueVisible] = useState(false);
 
@@ -26,7 +27,12 @@ const Issues = observer(() => {
   useEffect(() => {
     fetchOneProject(id).then((data) => {
       project.setProject(data);
-      fetchUsersByWs(data.ws_id).then((data1) => project.setUsers(data1));
+      fetchUsersByWs(data.ws_id).then((data1) => {
+        project.setUsers(data1);
+        if (!project.users.map((user1) => user1.id).includes(user.user.id)) {
+          history.push('/');
+        }
+      });
     });
     fetchIssues(id, null).then((data) => project.setIssues(data));
     fetchTags(id).then((data) => project.setTags(data));

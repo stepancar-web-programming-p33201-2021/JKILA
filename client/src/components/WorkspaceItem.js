@@ -1,13 +1,17 @@
 /* eslint-disable */
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, Card, Container, Row} from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { PROJECTS } from "../utils/consts";
 import {observer} from "mobx-react-lite";
 import UpdateWorkspace from "../modals/updateWorkspace";
+import {Context} from "../index";
 
 const WorkspaceItem = observer(({workspace}) => {
   const history = useHistory();
+
+  const { user } = useContext(Context);
+
   const [editVisible, setEditVisible] = useState(false);
   return (
     <Row style={{ paddingLeft: '10%', paddingRight : '10%'}}>
@@ -26,9 +30,14 @@ const WorkspaceItem = observer(({workspace}) => {
           </Card.Text>
         </Card.Body>
         <Container className="d-flex flex-column">
-          <Button variant="outline-primary" onClick={() => setEditVisible(true)}>
-            edit workspace
-          </Button>
+          {user.user.role === 'ADMIN'
+            ? (
+              <Button variant="outline-primary" onClick={() => setEditVisible(true)}>
+                edit workspace
+              </Button>
+            )
+            // eslint-disable-next-line react/jsx-no-useless-fragment
+            : <></>}
           <UpdateWorkspace show={editVisible} onHide={() => setEditVisible(false)} workspace={workspace} />
         </Container>
       </Card>
