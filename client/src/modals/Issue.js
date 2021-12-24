@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useContext, useEffect, useState } from 'react';
-import {Button, Container, FloatingLabel, Form, Modal} from 'react-bootstrap';
+import {Button, Card, Container, FloatingLabel, Form, Modal} from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { Context } from "../index";
 import { useParams } from "react-router-dom";
@@ -62,30 +62,33 @@ const Issue = observer(({ show, onHide, issue }) => {
         <h6> Due date </h6>
         <p> {issue.due_date} </p>
         <h6> Assignees </h6>
-        {assignees.map((user) => <Button key={user.id}>{user.username}</Button>)}
+        <p>{assignees.map((user) => <Button key={user.id} active  className="me-md-2">{user.username}</Button>)}</p>
         <h6> Tags </h6>
-        {tags.map((tag) => <Button variant="warning" key={tag.id}>{tag.tag_name}</Button>)}
-        <Container className="d-flex flex-column">
-          <Button variant="outline-primary" onClick={() => setEditVisible(true)}>
+        <p>{tags.map((tag) => <Button variant="warning" key={tag.id} active className="me-md-2">{tag.tag_name}</Button>)}</p>
+        <Container className="d-flex flex-column mb-3">
+          <Button variant="secondary" onClick={() => setEditVisible(true)}>
             update Issue
           </Button>
           <UpdateIssue show={editVisible} onHide={() => setEditVisible(false)} issue = {issue} />
         </Container>
-        <Form>
+        <Form className="mb-5">
           <Form.Group className="mb-3">
             <FloatingLabel controlId="floatingTextarea2" label="Comments">
               <Form.Control value={body}
                             onChange={(e) => setBody(e.target.value)} placeholder="Comment"/>
             </FloatingLabel>
           </Form.Group>
+          <Button variant="outline-success" onClick={addComment}>Добавить</Button>
         </Form>
-        <Button variant="outline-success" onClick={addComment}>Добавить</Button>
           {comments.map((comment) =>
-            <div>
-              {project.users.filter((user) => user.id === comment.user_id).map((user) => <p>{user.username}</p>)}
-              <p>{comment.body}</p>
-              <br></br>
-            </div>
+            <Card className="mb-4">
+              <Card.Header>{project.users.filter((user) => user.id === comment.user_id).map((user) => <p>{user.username}</p>)}</Card.Header>
+              <Card.Body>
+                <Card.Text>
+                  {comment.body}
+                </Card.Text>
+              </Card.Body>
+            </Card>
           )}
       </Modal.Body>
     </Modal>
