@@ -23,13 +23,13 @@ const Workspaces = observer(() => {
       <Container className="d-flex flex-column my-2">
         {user.user.role === 'ADMIN'
           ? (
-            <Button variant="outline-success" onClick={() => setWorkspaceVisible(true)}>
+            <Button variant="outline-info" onClick={() => setWorkspaceVisible(true)} className="mb-3">
               Create Workspace
             </Button>
           )
           // eslint-disable-next-line react/jsx-no-useless-fragment
           : <></>}
-        <Button variant="outline-danger" onClick={() => setJoinVisible(true)}>
+        <Button variant="outline-warning" onClick={() => setJoinVisible(true)} className="mb-3">
           Join workspace
         </Button>
         <CreateWorkspace show={workspaceVisible} onHide={() => setWorkspaceVisible(false)} />

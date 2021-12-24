@@ -31,7 +31,7 @@ const Projects = observer(() => {
       <Container className="d-flex flex-column">
         {user.user.role === 'ADMIN'
           ? (
-            <Button variant="outline-danger" onClick={() => setProjectVisible(true)}>
+            <Button variant="outline-info" onClick={() => setProjectVisible(true)}>
               Create Project
             </Button>
           )

@@ -15,7 +15,7 @@ const WorkspaceItem = observer(({workspace}) => {
   const [editVisible, setEditVisible] = useState(false);
   return (
     <Row style={{ paddingLeft: '10%', paddingRight : '10%'}}>
-      <Card style={{ width: '100%', cursor: 'pointer' }} className="mt-3 align-items-center">
+      <Card style={{ width: '100%', cursor: 'pointer' }} className="mt-3 align-items-center mb-3">
         <Card.Body onClick={() => history.push(PROJECTS + '/' + workspace.id)}>
           <Card.Title>
             {workspace.workspace_name}
@@ -32,7 +32,7 @@ const WorkspaceItem = observer(({workspace}) => {
         <Container className="d-flex flex-column">
           {user.user.role === 'ADMIN'
             ? (
-              <Button variant="outline-primary" onClick={() => setEditVisible(true)}>
+              <Button variant="outline-primary" onClick={() => setEditVisible(true)} className="mb-3" >
                 edit workspace
               </Button>
             )
