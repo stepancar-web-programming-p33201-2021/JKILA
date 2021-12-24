@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, {useContext, useState} from 'react';
 import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap';
-import {fetchWorkspaces, joinWorkspace, updateWorkspace} from '../http/workspaceApi';
+import { fetchWorkspaces, joinWorkspace, updateWorkspace } from '../http/workspaceApi';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../index';
 
@@ -49,7 +49,7 @@ const UpdateWorkspace = observer(({show, onHide, workspace: work}) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="outline-success" onClick={editWorkspace}>Добавить</Button>
+        <Button variant="outline-success" onClick={editWorkspace}> Редактировать </Button>
       </Modal.Footer>
     </Modal>
   );

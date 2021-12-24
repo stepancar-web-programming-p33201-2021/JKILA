@@ -92,8 +92,7 @@ const Issue = observer(({ show, onHide, issue }) => {
           </Form.Group>
           <Button variant="outline-success" onClick={addComment}>Добавить</Button>
         </Form>
-        <Button variant="outline-success" onClick={addComment}>Добавить</Button>
-          {comments.map((comment) => <Comment comment={comment} />)}
+        {comments.map((comment) => <Comment comment={comment} />)}
       </Modal.Body>
     </Modal>
   );
