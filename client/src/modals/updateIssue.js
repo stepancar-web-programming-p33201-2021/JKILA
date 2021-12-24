@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { Context } from "../index";
 import { useParams } from 'react-router-dom';
 
-import {addIssueAssignee, addIssueTag, fetchIssues, updateIssue} from '../http/issueApi';
+import {addIssueAssignee, addIssueTag, deleteAssignees, deleteTags, fetchIssues, updateIssue} from '../http/issueApi';
 import { fetchIssueTags } from "../http/tagApi";
 import {fetchAssignees} from "../http/userAPI";
 
@@ -48,6 +48,8 @@ const UpdateIssue = observer(({ show, onHide, issue }) => {
   }
 
   const editIssue = () => {
+    deleteTags(issue.id).then(() => {});
+    deleteAssignees(issue.id).then(() => {});
     updateIssue(issue.id, summary, due, status, priority, desc).then((data) => {
       assignees.forEach((item) =>{
         addIssueAssignee(item, issue.id).then(r => {});

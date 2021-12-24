@@ -49,6 +49,20 @@ export const fetchIssues = async (id, myFilter) => {
   return data;
 };
 
+export const deleteTags = async (id) => {
+  const { data } = await $host.post(`api/issue/destroyt/${id}`, {
+    id,
+  });
+  return data;
+};
+
+export const deleteAssignees = async (id) => {
+  const { data } = await $host.post(`api/issue/destroya/${id}`, {
+    id,
+  });
+  return data;
+};
+
 export const fetchOneIssue = async (id) => {
   const { data } = await $host.get(`api/issue/one/${id}`);
   return data;

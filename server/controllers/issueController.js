@@ -1,5 +1,5 @@
 const {
-  Issue, User, Tag, IssueAssignee,
+  Issue, User, Tag, IssueAssignee, IssueTags,
 } = require('../models/models');
 const customError = require('../error/customError');
 
@@ -61,6 +61,19 @@ async function addTag(req, res) {
   return res.json(issue);
 }
 
+async function destroyIssueTags(req, res) {
+  const { id } = req.body;
+  await IssueTags.destroy({ where: { issueId: id } });
+  return res.json({ message: `Tags deleted` });
+}
+
+
+async function destroyIssueAssignees(req, res) {
+  const { id } = req.body;
+  await IssueAssignee.destroy({ where: { issueId: id } });
+  return res.json({ message: `Assignees deleted` });
+}
+
 async function getAll(req, res) {
   const { myFilter } = req.query;
   const { id } = req.params;
@@ -117,4 +130,6 @@ module.exports = {
   destroy,
   addAssignee,
   addTag,
+  destroyIssueTags,
+  destroyIssueAssignees,
 };
