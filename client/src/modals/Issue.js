@@ -10,6 +10,7 @@ import { fetchAssignees, fetchOneUser } from "../http/userAPI";
 import {fetchIssueTags} from "../http/tagApi";
 import {createComment, fetchComments} from "../http/commentApi";
 import UpdateIssue from "./updateIssue";
+import Comment from "../components/Comment";
 
 const Issue = observer(({ show, onHide, issue }) => {
   const { project, user } = useContext(Context);
@@ -22,12 +23,18 @@ const Issue = observer(({ show, onHide, issue }) => {
   const [editVisible, setEditVisible] = useState(false);
 
   const { id } = useParams();
-
   const addComment = () => {
-    createComment(body, user.user.id, issue.id).then(() =>{
+    createComment(body, user.user.id, issue.id).then((data) =>{
       setBody('');
       fetchComments(issue.id).then((data) => setComments(data));
     })
+  }
+
+  const commentEnter = (e) => {
+    if (e.keyCode === 13){
+      e.preventDefault();
+      addComment();
+    }
   }
 
   useEffect(() => {
@@ -36,6 +43,10 @@ const Issue = observer(({ show, onHide, issue }) => {
     fetchIssueTags(issue.id).then((data) => setTags(data));
     fetchComments(issue.id).then((data) => setComments(data));
   }, []);
+
+  useEffect(() => {
+    fetchComments(issue.id).then((data) => setComments(data));
+  }, [project.reloadComments]);
 
   return (
     <Modal show={show} onHide={onHide}>
@@ -75,21 +86,14 @@ const Issue = observer(({ show, onHide, issue }) => {
           <Form.Group className="mb-3">
             <FloatingLabel controlId="floatingTextarea2" label="Comments">
               <Form.Control value={body}
-                            onChange={(e) => setBody(e.target.value)} placeholder="Comment"/>
+                            onChange={(e) => setBody(e.target.value)}
+                            onKeyDown={(e) => commentEnter(e)} placeholder="Comment"/>
             </FloatingLabel>
           </Form.Group>
           <Button variant="outline-success" onClick={addComment}>Добавить</Button>
         </Form>
-          {comments.map((comment) =>
-            <Card className="mb-4">
-              <Card.Header>{project.users.filter((user) => user.id === comment.user_id).map((user) => <p>{user.username}</p>)}</Card.Header>
-              <Card.Body>
-                <Card.Text>
-                  {comment.body}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          )}
+        <Button variant="outline-success" onClick={addComment}>Добавить</Button>
+          {comments.map((comment) => <Comment comment={comment} />)}
       </Modal.Body>
     </Modal>
   );
