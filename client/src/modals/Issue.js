@@ -42,7 +42,7 @@ const Issue = observer(({ show, onHide, issue }) => {
     fetchAssignees(issue.id).then((data) => setAssignees(data));
     fetchIssueTags(issue.id).then((data) => setTags(data));
     fetchComments(issue.id).then((data) => setComments(data));
-  }, []);
+  }, [assignees]);
 
   useEffect(() => {
     fetchComments(issue.id).then((data) => setComments(data));
