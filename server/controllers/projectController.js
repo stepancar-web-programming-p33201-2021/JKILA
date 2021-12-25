@@ -9,11 +9,21 @@ async function create(req, res) {
   return res.json(project);
 }
 
-async function destroy(req, res) {
-  const { id } = req.params;
-  await Project.destroy({ where: { id } });
-  return res.json({ message: `Project with ID = ${id} deleted` });
+async function update(req, res) {
+  const {
+    id, name, desc
+  } = req.body;
+  await Project.update({
+    proj_name: name, description: desc,
+  }, { where: { id } });
+  return res.json({ message: `Project with ID = ${id} updated` });
 }
+//
+// async function destroy(req, res) {
+//   const { id } = req.params;
+//   await Project.destroy({ where: { id } });
+//   return res.json({ message: `Project with ID = ${id} deleted` });
+// }
 
 async function getAll(req, res) {
   const { id } = req.params;
@@ -32,7 +42,8 @@ async function getOne(req, res, next) {
 
 module.exports = {
   create,
+  update,
   getOne,
   getAll,
-  destroy,
+  // destroy,
 };

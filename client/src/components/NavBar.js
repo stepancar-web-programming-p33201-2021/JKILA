@@ -34,12 +34,11 @@ const NavBar = observer(() => {
          <NavLink to={WORKSPACES} className="h1 text-dark text-decoration-none"> JKILA </NavLink>
         </p>
         <img src={jkilaLogo} className="App-logo2 my-0 me-md-auto fw-normal" alt="" />
+        <p className="h4 text-dark text-decoration-none me-md-4">{user.user.username}</p>
 
         {user.isAuth
           ? (
             <nav className="my-2 my-md-0 me-md-3">
-              <NavLink to={WORKSPACES} className="p-2 text-dark text-decoration-none"> Workspaces </NavLink>
-              <NavLink to={WORKSPACES} className="p-2 text-dark text-decoration-none" >{user.user.username}</NavLink>
               <NavLink to={LOGIN_ROUTE} className="btn btn-outline-primary ml-5" onClick={() => logOut()}> Sign Out </NavLink>
             </nav>
           )

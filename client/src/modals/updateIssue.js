@@ -1,28 +1,35 @@
 /* eslint-disable */
-import React, { useContext, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import { Context } from "../index";
 import { useParams } from 'react-router-dom';
 
-import { addIssueAssignee, addIssueTag, createIssue, fetchIssues } from '../http/issueApi';
-import { createTag, fetchTags } from '../http/tagApi';
+import {addIssueAssignee, addIssueTag, deleteAssignees, deleteTags, fetchIssues, updateIssue} from '../http/issueApi';
+import { fetchIssueTags } from "../http/tagApi";
+import {fetchAssignees} from "../http/userAPI";
 
-const CreateIssue = observer(({ show, onHide }) => {
-  const { project, user } = useContext(Context);
-  const [summary, setSummary] = useState('');
-  const [priority, setPriority] = useState('Medium');
-  const [status, setStatus] = useState('To Do');
-  const [desc, setDesc] = useState('');
-  const [due, setDue] = useState('');
-  const [reporter, setReporter] = useState(user.user.id);
+
+const UpdateIssue = observer(({ show, onHide, issue }) => {
+  const { project } = useContext(Context);
+  const [summary, setSummary] = useState(issue.summary);
+  const [desc, setDesc] = useState(issue.description);
+  const [due, setDue] = useState(issue.due_date);
+  const [priority, setPriority] = useState(issue.priority);
+  const [status, setStatus] = useState(issue.status);
   const [assignees, setAssignees] = useState([]);
   const [tags, setTags] = useState([]);
 
-  const [tagInput, setTagInput] = useState(false);
-  const [tagName, setTagName] = useState('');
-
   const { id } = useParams();
+
+  useEffect(() => {
+    fetchIssueTags(issue.id).then((data) => {
+      data.map((tag) => addTagIssue(tag.tag_name))
+    });
+    fetchAssignees(issue.id).then((data) => {
+      data.map((user) => addAssignee(user.username))
+    });
+  }, []);
 
   const addAssignee = (username) => {
     setAssignees([...assignees, username])
@@ -40,32 +47,17 @@ const CreateIssue = observer(({ show, onHide }) => {
     setTags(tags.filter(i => i !== name))
   }
 
-  const addTag = () => {
-    createTag(tagName, id).then(() =>{
-     setTagInput(false);
-     setTagName('');
-     fetchTags(id).then((data) => project.setTags(data));
-    })
-  }
-
-  const addIssue = () => {
-    console.log(summary, priority, status);
-    createIssue(summary, due, id, priority, status, desc, reporter).then((data) => {
-      setSummary('');
-      setPriority('Medium');
-      setDesc('');
-      setDue('')
-      setReporter(user.user.id);
+  const editIssue = () => {
+    deleteTags(issue.id).then(() => {});
+    deleteAssignees(issue.id).then(() => {});
+    updateIssue(issue.id, summary, due, status, priority, desc).then((data) => {
       assignees.forEach((item) =>{
-        addIssueAssignee(item, data.id).then(r => {});
+        addIssueAssignee(item, issue.id).then(r => {});
       })
-      setAssignees([]);
       tags.forEach((item) =>{
-        addIssueTag(item, data.id).then(r => {});
+        addIssueTag(item, issue.id).then(r => {});
       })
-      setTags([]);
       fetchIssues(id).then((data) => project.setIssues(data));
-      console.log(project.issues);
       onHide();
     });
   };
@@ -74,11 +66,19 @@ const CreateIssue = observer(({ show, onHide }) => {
     <Modal show={show} onHide={onHide} size={"lg"}>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Добавить issue
+          Редактировать issue
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
+          <Form.Group className="mb-3">
+          <Form.Select className="me-3" onChange={(e) => setStatus(e.target.value)} defaultValue={status}>
+            <option> To Do </option>
+            <option> In Progress </option>
+            <option> Done </option>
+          </Form.Select>
+          </Form.Group>
+
           <Form.Group className="mb-3">
             <FloatingLabel controlId="floatingTextarea" label="Short summary">
               <Form.Control value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="Summary" />
@@ -100,21 +100,12 @@ const CreateIssue = observer(({ show, onHide }) => {
           </Form.Group>
 
           <FloatingLabel controlId="floatingSelect1" label="Priority">
-            <Form.Select className="mt-2 mb-3" onChange={(e) => setPriority(e.target.value)} defaultValue="Medium">
+            <Form.Select className="mt-2 mb-3" onChange={(e) => setPriority(e.target.value)} defaultValue={priority}>
               <option> Highest </option>
               <option> High </option>
               <option> Medium </option>
               <option> Low </option>
               <option> Lowest </option>
-            </Form.Select>
-          </FloatingLabel>
-
-          <FloatingLabel controlId="floatingSelect2" label="Reporter">
-            <Form.Select className="mt-2 mb-3" onChange={(e) => {setReporter(e.target.value);
-                                                        console.log(reporter)}}>
-              <option style={{display:'none'}}> Выберите Reporter </option>
-              {project.users
-                .map((user) => <option hidden={user.id === reporter} key={user.id} value={user.id}>{user.username}</option>)}
             </Form.Select>
           </FloatingLabel>
 
@@ -150,28 +141,13 @@ const CreateIssue = observer(({ show, onHide }) => {
 
           {tags.map((tag) => <Button onClick={() => removeTagIssue(tag)}> {tag} </Button>)}
 
-          <Button variant="success" className="my-2" onClick={() => {
-            if (tagInput){
-              if (tagName !== '') {
-                addTag();
-                document.getElementById('tagCr').value = '';
-              }
-              setTagInput(false);
-              document.getElementById('tagCr').style.display ='none';
-            } else {
-              setTagInput(true);
-              document.getElementById('tagCr').style.display = 'block';
-            }
-          }}>+ Create tag</Button>
-          <input id="tagCr" className="form-control" type="text" style={{display: 'none'}}
-                 onChange={(e) => setTagName(e.target.value)}/>
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="outline-success" onClick={addIssue}>Добавить</Button>
+        <Button variant="outline-success" onClick={editIssue}>Обновить</Button>
       </Modal.Footer>
     </Modal>
   );
 });
 
-export default CreateIssue;
+export default UpdateIssue;

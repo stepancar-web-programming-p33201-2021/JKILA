@@ -1,4 +1,6 @@
-const { Issue, User, Tag } = require('../models/models');
+const {
+  Issue, User, Tag, IssueAssignee, IssueTags,
+} = require('../models/models');
 const customError = require('../error/customError');
 
 async function create(req, res) {
@@ -24,6 +26,20 @@ async function destroy(req, res) {
 }
 
 async function update(req, res) {
+  const {
+    id, summary, due, status, priority, desc,
+  } = req.body;
+  await Issue.update({
+    due_date: due,
+    status,
+    summary,
+    priority,
+    description: desc,
+  }, { where: { id } });
+  return res.json({ message: `Issue with ID = ${id} updated` });
+}
+
+async function updateStatus(req, res) {
   const { id, status } = req.body;
   await Issue.update({ status }, { where: { id } });
   return res.json({ message: `Issue with ID = ${id} updated` });
@@ -45,22 +61,54 @@ async function addTag(req, res) {
   return res.json(issue);
 }
 
+async function destroyIssueTags(req, res) {
+  const { id } = req.body;
+  await IssueTags.destroy({ where: { issueId: id } });
+  return res.json({ message: `Tags deleted` });
+}
+
+
+async function destroyIssueAssignees(req, res) {
+  const { id } = req.body;
+  await IssueAssignee.destroy({ where: { issueId: id } });
+  return res.json({ message: `Assignees deleted` });
+}
+
 async function getAll(req, res) {
-  let issues;
-  const { priority, status } = req.query;
+  const { myFilter } = req.query;
   const { id } = req.params;
-  if (!priority && !status) {
+  let issues;
+  console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+  console.log(myFilter);
+  console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+  if (myFilter === undefined) {
     issues = await Issue.findAll({ where: { project_id: id } });
+  } else {
+    issues = await Issue.findAll({
+      where: {
+        project_id: id,
+      },
+      include: [{
+        model: IssueAssignee,
+        where: {
+          userId: myFilter,
+        },
+      }],
+    });
   }
-  if (priority && !status) {
-    issues = await Issue.findAll({ where: { priority, project_id: id } });
-  }
-  if (!priority && status) {
-    issues = await Issue.findAll({ where: { status, project_id: id } });
-  }
-  if (priority && status) {
-    issues = await Issue.findAll({ where: { priority, status, project_id: id } });
-  }
+
+  // if (!priority && !status) {
+  //   issues = await Issue.findAll({ where: { project_id: id } });
+  // }
+  // if (priority && !status) {
+  //   issues = await Issue.findAll({ where: { priority, project_id: id } });
+  // }
+  // if (!priority && status) {
+  //   issues = await Issue.findAll({ where: { status, project_id: id } });
+  // }
+  // if (priority && status) {
+  //   issues = await Issue.findAll({ where: { priority, status, project_id: id } });
+  // }
   return res.json(issues);
 }
 
@@ -76,9 +124,12 @@ async function getOne(req, res, next) {
 module.exports = {
   create,
   update,
+  updateStatus,
   getOne,
   getAll,
   destroy,
   addAssignee,
   addTag,
+  destroyIssueTags,
+  destroyIssueAssignees,
 };

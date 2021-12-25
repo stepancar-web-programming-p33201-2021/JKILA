@@ -7,8 +7,15 @@ export const createIssue = async (summary, due, project, priority, status, desc,
   return data;
 };
 
-export const updateIssue = async (id, status) => {
+export const updateIssue = async (id, summary, due, status, priority, desc) => {
   const { data } = await $host.post('api/issue/update', {
+    id, summary, due, status, priority, desc,
+  });
+  return data;
+};
+
+export const updateIssueStatus = async (id, status) => {
+  const { data } = await $host.post('api/issue/upd_status', {
     id, status,
   });
   return data;
@@ -33,8 +40,26 @@ export const deleteIssue = async (id) => {
   return data;
 };
 
-export const fetchIssues = async (id) => {
-  const { data } = await $host.get(`api/issue/all/${id}`);
+export const fetchIssues = async (id, myFilter) => {
+  const { data } = await $host.get(`api/issue/all/${id}`, {
+    params: {
+      myFilter,
+    },
+  });
+  return data;
+};
+
+export const deleteTags = async (id) => {
+  const { data } = await $host.post(`api/issue/destroyt/${id}`, {
+    id,
+  });
+  return data;
+};
+
+export const deleteAssignees = async (id) => {
+  const { data } = await $host.post(`api/issue/destroya/${id}`, {
+    id,
+  });
   return data;
 };
 

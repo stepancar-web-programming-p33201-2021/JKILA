@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
@@ -18,7 +19,7 @@ const AppRouter = observer(() => {
           exact
         />
       ))}
-      {publicRoutes.map(({ path, Component }) => (
+      {user.isAuth === false && publicRoutes.map(({ path, Component }) => (
         <Route
           key={path}
           path={path}
@@ -33,8 +34,4 @@ const AppRouter = observer(() => {
   );
 });
 
-/* { user.isAuth === true
-        ? <Redirect to={WORKSPACES} />
-        : <Redirect to={LOGIN_ROUTE} />}
-*/
 export default AppRouter;
