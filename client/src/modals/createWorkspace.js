@@ -36,7 +36,7 @@ const CreateWorkspace = observer(({show, onHide}) => {
         <Form>
           <Form.Group className="mb-3">
             <FloatingLabel controlId="floatingName" label="Name">
-              <Form.Control value={name} onChange={(e) => setName(e.target.value)} placeholder="Введите название workspace"/>
+              <Form.Control required value={name} onChange={(e) => setName(e.target.value)} placeholder="Введите название workspace"/>
             </FloatingLabel>
           </Form.Group>
           <Form.Group className="mb-3">
@@ -46,14 +46,12 @@ const CreateWorkspace = observer(({show, onHide}) => {
           </Form.Group>
           <Form.Group className="mb-3">
             <FloatingLabel controlId="floatingCode" label="Code for entering">
-              <Form.Control value={code} onChange={(e) => setCode(e.target.value)} placeholder="Code"/>
+              <Form.Control required value={code} onChange={(e) => setCode(e.target.value)} placeholder="Code"/>
             </FloatingLabel>
           </Form.Group>
+          <Button variant="outline-success" onClick={addWorkspace} type="submit">Добавить</Button>
         </Form>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="outline-success" onClick={addWorkspace}>Добавить</Button>
-      </Modal.Footer>
     </Modal>
   );
 })

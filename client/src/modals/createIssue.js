@@ -81,7 +81,7 @@ const CreateIssue = observer(({ show, onHide }) => {
         <Form>
           <Form.Group className="mb-3">
             <FloatingLabel controlId="floatingTextarea" label="Short summary">
-              <Form.Control value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="Summary" />
+              <Form.Control required value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="Summary" />
             </FloatingLabel>
           </Form.Group>
 
@@ -165,11 +165,9 @@ const CreateIssue = observer(({ show, onHide }) => {
           }}>+ Create tag</Button>
           <input id="tagCr" className="form-control" type="text" style={{display: 'none'}}
                  onChange={(e) => setTagName(e.target.value)}/>
+          <Button variant="outline-success" onClick={addIssue} type="submit">Добавить</Button>
         </Form>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="outline-success" onClick={addIssue}>Добавить</Button>
-      </Modal.Footer>
     </Modal>
   );
 });
