@@ -1,40 +1,25 @@
 # JKILA
 
-The Jira killing app :)
+The Jira killing app :\
 
 ## OUR FIGMA UI LINK
 
 https://www.figma.com/file/3e2ZeVqKohY7AuNXr3ExDz/WEB-PROJECT?node-id=0%3A1
 
-## Available Scripts
+## To start the project you need to add in \client
 
-In the project directory, you can run:
+File .env with data:
+REACT_APP_API_URL='http://localhost:5000'
 
-### `npm start`
+### `npm start` from \client
 
-Runs the server in the development mode.\
-Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
+Runs the client.\
+Open [http://localhost:5000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run server`
+### `npm run server` from \server
 
 Runs the server in the development mode. (with nodemon)\
 Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
-
-### `npm run client`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-### `npm dev`
-
-Runs the app and the server concurrently.\
-Open [http://localhost:3000](http://localhost:3000) for app.
-Open [http://localhost:5000](http://localhost:5000) for server.
