@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { Spinner } from 'react-bootstrap';
-import { check } from './http/userAPI';
+import {check, registrationAdmin} from './http/userAPI';
 import { Context } from './index';
 
 import AppRouter from './components/AppRouter';
@@ -19,6 +19,10 @@ const App = observer(() => {
       user.setIsAuth(true);
     }).finally(() => setLoading(false));
   }, []);
+
+  (async () => {
+    await registrationAdmin('admin', 'admin','admin', 'admin',)
+  })();
 
   if (loading) {
     return <Spinner animation="grow" />;

@@ -32,7 +32,7 @@ const Workspace = pool.define('workspace', {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   workspace_name: { type: DataTypes.STRING, unique: true, allowNull: false },
   description: { type: DataTypes.TEXT },
-  code: { type: DataTypes.STRING },
+  code: { type: DataTypes.STRING, unique: true, allowNull: false },
   // TODO
   // logo NN
 });
