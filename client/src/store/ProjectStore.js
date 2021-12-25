@@ -9,6 +9,8 @@ export default class ProjectStore {
     this._tags = [];
     this._myFilter = null;
     this._reloadComments = null;
+    this._reloadAssignees = null;
+    this._reloadTags = null;
     makeAutoObservable(this);
   }
 
@@ -38,6 +40,22 @@ export default class ProjectStore {
 
   setReloadComments(value) {
     this._reloadComments = value;
+  }
+
+  setReloadAssignees(value) {
+    this._reloadAssignees = value;
+  }
+
+  setReloadTags(value) {
+    this._reloadTags = value;
+  }
+
+  get reloadTags() {
+    return this._reloadTags;
+  }
+
+  get reloadAssignees() {
+    return this._reloadAssignees;
   }
 
   get reloadComments() {

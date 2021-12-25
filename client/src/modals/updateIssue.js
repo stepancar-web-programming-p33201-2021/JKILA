@@ -24,10 +24,10 @@ const UpdateIssue = observer(({ show, onHide, issue }) => {
 
   useEffect(() => {
     fetchIssueTags(issue.id).then((data) => {
-      data.map((tag) => addTagIssue(tag.tag_name))
+      setTags(data.map((tag) => tag.tag_name));
     });
     fetchAssignees(issue.id).then((data) => {
-      data.map((user) => addAssignee(user.username))
+      setAssignees(data.map((user) => user.username));
     });
   }, []);
 
@@ -48,14 +48,14 @@ const UpdateIssue = observer(({ show, onHide, issue }) => {
   }
 
   const editIssue = () => {
-    deleteTags(issue.id).then(() => {});
-    deleteAssignees(issue.id).then(() => {});
+    deleteTags(issue.id).then((r) => {project.setReloadTags(r.message);});
+    deleteAssignees(issue.id).then((r) => {project.setReloadAssignees(r.message);});
     updateIssue(issue.id, summary, due, status, priority, desc).then((data) => {
       assignees.forEach((item) =>{
-        addIssueAssignee(item, issue.id).then(r => {});
+        addIssueAssignee(item, issue.id).then(r => {project.setReloadAssignees(r.id);});
       })
       tags.forEach((item) =>{
-        addIssueTag(item, issue.id).then(r => {});
+        addIssueTag(item, issue.id).then(r => {project.setReloadTags(r.id);});
       })
       fetchIssues(id).then((data) => project.setIssues(data));
       onHide();

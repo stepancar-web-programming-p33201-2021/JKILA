@@ -42,11 +42,20 @@ const Issue = observer(({ show, onHide, issue }) => {
     fetchAssignees(issue.id).then((data) => setAssignees(data));
     fetchIssueTags(issue.id).then((data) => setTags(data));
     fetchComments(issue.id).then((data) => setComments(data));
-  }, [assignees]);
+  }, []);
 
   useEffect(() => {
     fetchComments(issue.id).then((data) => setComments(data));
   }, [project.reloadComments]);
+
+  useEffect(() => {
+    fetchAssignees(issue.id).then((data) => setAssignees(data));
+  }, [project.reloadAssignees]);
+
+  useEffect(() => {
+    fetchIssueTags(issue.id).then((data) => setTags(data));
+  }, [project.reloadTags]);
+
 
   return (
     <Modal show={show} onHide={onHide}>
