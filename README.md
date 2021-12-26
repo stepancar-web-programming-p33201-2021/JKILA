@@ -25,3 +25,7 @@ You will also see any lint errors in the console.
 
 Runs the server in the development mode. (with nodemon)\
 Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
+
+### To be in the role of an ADMIN, log in as user:
+username:admin;
+password:admin;
