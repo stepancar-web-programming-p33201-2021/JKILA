@@ -17,12 +17,13 @@ const App = observer(() => {
     check().then((data) => {
       user.setUser(data);
       user.setIsAuth(true);
-    }).finally(() => setLoading(false));
+    }).finally(() => setLoading(false))
+      .catch(err => console.log(1));
   }, []);
 
-  (async () => {
+  /*(async () => {
     await registrationAdmin('admin', 'admin','admin', 'admin',)
-  })();
+  })();*/
 
   if (loading) {
     return <Spinner animation="grow" />;

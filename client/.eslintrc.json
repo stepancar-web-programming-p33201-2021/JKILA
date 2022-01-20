@@ -22,5 +22,6 @@
         "linebreak-style": "off",
         "no-underscore-dangle": "off",
         "import/no-cycle": "off"
-    }
+    },
+    "ignorePatterns": [ "cypress/" ]
 }
