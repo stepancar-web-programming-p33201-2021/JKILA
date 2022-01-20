@@ -1,9 +1,9 @@
 {
   "port": 5000,
   "SECRET_KEY": "random_secret_key",
-  "db_name": "jkila",
-  "db_user": "postgres",
-  "db_password": "789456123",
-  "db_host": "localhost",
+  "db_name": "dbkdb2fesucnui",
+  "db_user": "lksafourgeoyfr",
+  "db_password": "1c8bfad070f87795b5966c421c5993167f69fe29cf9fa56e631c5fd05d79f3fb",
+  "db_host": "ec2-18-234-17-166.compute-1.amazonaws.com",
   "db_port": "5432"
 }
