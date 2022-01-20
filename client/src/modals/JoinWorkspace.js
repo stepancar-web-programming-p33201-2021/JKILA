@@ -32,7 +32,7 @@ const JoinWorkspace = observer(({show, onHide}) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="outline-success" onClick={joinWorkspaceButton}>Добавить</Button>
+        <Button variant="outline-success" onClick={joinWorkspaceButton}>Вступить</Button>
       </Modal.Footer>
     </Modal>
   );
