@@ -40,8 +40,8 @@ describe('Kanban', () => {
           <Kanban />
         </Router>
       </Context.Provider>)
-    expect(screen.getByText(/Filters/i)).toBeInTheDocument();
-    expect(screen.getByText(/Create Issue/i)).toBeInTheDocument();
+    expect(screen.getAllByRole("button")[0]).toHaveTextContent(/Only My Issues/i);
+    expect(screen.getAllByRole("button")[1]).toHaveTextContent(/Create Issue/i);
   });
 
   it('no previous "add issue button', () => {
@@ -77,11 +77,10 @@ describe('Kanban', () => {
           <Kanban />
         </Router>
       </Context.Provider>)
-    screen.debug();
     expect(screen.getAllByRole("button")).toHaveLength(2);
   });
 
-  it('button "Only my issues" has correct style class', () => {
+  it('buttons have correct style class', () => {
     const history = createMemoryHistory();
     const route = '/projects/1';
     history.push(route);
@@ -97,6 +96,7 @@ describe('Kanban', () => {
         </Router>
       </Context.Provider>)
     expect(screen.getAllByRole("button")[0]).toHaveClass('btn btn-secondary');
+    expect(screen.getAllByRole("button")[1]).toHaveClass('btn btn-outline-primary');
   });
 });
 

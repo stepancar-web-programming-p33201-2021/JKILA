@@ -59,7 +59,7 @@ describe('Auth', () => {
     expect(screen.getByPlaceholderText("Введите пароль...")).toHaveClass("mt-3 form-control");
   });
 
-  it('no sign in button', () => {
+  it('no sign in button, only register button', () => {
     const history = createMemoryHistory();
     const route = '/registration';
     history.push(route);
@@ -75,6 +75,7 @@ describe('Auth', () => {
         </Router>
       </Context.Provider>)
     expect(screen.queryByRole("button")).not.toHaveTextContent("Войти");
+    expect(screen.queryByRole("button")).toHaveTextContent("Регистрация");
   });
 
 });
