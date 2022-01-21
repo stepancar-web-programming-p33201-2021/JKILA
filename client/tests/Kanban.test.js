@@ -77,7 +77,6 @@ describe('Kanban', () => {
           <Kanban />
         </Router>
       </Context.Provider>)
-    screen.debug();
     expect(screen.getAllByRole("button")).toHaveLength(2);
   });
 
