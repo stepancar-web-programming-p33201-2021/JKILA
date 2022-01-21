@@ -14,7 +14,7 @@ The Jira killing app :\
 * heroku create
 * зайти на хероку, создать аддон psql и посмотреть креды для бд, вставить в конфиг сервера
 * git add .
-* git push heroku main
+* git push heroku master
 
 ### client:
 * git init 
@@ -23,7 +23,7 @@ The Jira killing app :\
 * git commit -m "init"
 * heroku login
 * heroku create jkila
-* git push heroku main
+* git push heroku master
 
 ### To be in the role of an ADMIN, log in as user:
 * username:admin;
