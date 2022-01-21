@@ -96,6 +96,6 @@ describe('Kanban', () => {
         </Router>
       </Context.Provider>)
     expect(screen.getAllByRole("button")[0]).toHaveClass('btn btn-secondary');
-    expect(screen.getAllByRole("button")[1]).toHaveClass('btn btn-secondary');
+    expect(screen.getAllByRole("button")[1]).toHaveClass('btn btn-outline-primary');
   });
 });
