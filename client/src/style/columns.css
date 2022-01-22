@@ -1,0 +1,32 @@
+.main {
+    margin:0 auto; /* Центрируем блоки */
+    width:100%; /* Задаем ширину 100%, чтобы сделать ее резиновой */
+    max-width:75%; /* Устанавливаем максимальную ширину */
+}
+.inline div {
+    display:inline-block; /* Делаем блоки по горизонтали */
+    vertical-align:top; /* Выравниваем их сверху */
+    font-size:16px; /* Ставим дочкам размер шрифта, иначе примет значение родителя */
+}
+div.inline {
+    font-size:0;
+} /* Ставим родителю значение 0, чтобы убрать отступы у блоков*/
+.left-block {
+    float: left;
+    background: #bd536c;
+    width:32%; /*Задаем ширину в процентах чтобы сделать ее резиновой*/
+    height:800px; /* Высота блока */
+}
+.center-block {
+    display: inline-block;
+    background: #29905a;
+    margin-left: 2%;
+    width:32%;
+    height:800px;
+}
+.right-block {
+    float: right;
+    background: #66adad;
+    width:32%;
+    height:800px;
+}

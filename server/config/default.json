@@ -1,0 +1,9 @@
+{
+  "port": 5000,
+  "SECRET_KEY": "random_secret_key",
+  "db_name": "jkila",
+  "db_user": "postgres",
+  "db_password": "789456123",
+  "db_host": "localhost",
+  "db_port": "5432"
+}
